@@ -1,0 +1,7 @@
+const UserStatus = {
+  ADMIN: { apiLink: "/profile/admin" },
+  LOAN: { apiLink: "/profile/loanee" },
+  INVESTOR: { apiLink: "/profile/investor" },
+};
+
+export default UserStatus;
