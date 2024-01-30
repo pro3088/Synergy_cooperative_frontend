@@ -37,7 +37,7 @@ const Overlay = ({ formConfig }) => {
 
   return (
     <div className="flex flex-col gap-2 items-center">
-      <h2 className="text-xl font-bold">{type} ADD BANK</h2>
+      <h2 className="text-xl font-bold"> ADD BANK</h2>
       {submissionSuccess ? (
         <div className="text-green-600 font-bold">
           Application submitted successfully!
