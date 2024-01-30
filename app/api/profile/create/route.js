@@ -32,6 +32,7 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error("Error processing form data:", error);
+    console.log(res)
     return new Response(error, { status: 500, headers: res.headers });
   }
 }
