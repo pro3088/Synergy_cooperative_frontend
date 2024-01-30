@@ -34,14 +34,20 @@ const ReferralGenerator = ({ options }) => {
   };
 
   const copyToClipboard = () => {
-    console.log(referralText, "this is referral text")
-    referralText = rotimisText
-   
-    navigator.clipboard.writeText(rotimisText);
+    const textArea = document.createElement("textarea");
+    textArea.value = referralText;
+
+    document.body.appendChild(textArea);
+
+    textArea.select();
+    document.execCommand('copy');
+
+    document.body.removeChild(textArea);
+
     setCopyMessage("Copied to clipboard!");
 
     setTimeout(() => {
-      setCopyMessage("");
+        setCopyMessage("");
     }, 2000);
   };
 
