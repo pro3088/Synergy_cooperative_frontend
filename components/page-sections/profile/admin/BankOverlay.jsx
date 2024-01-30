@@ -18,7 +18,7 @@ const Overlay = ({ formConfig }) => {
     try {
       const apiEndpoint = "/api/banks";
 
-      await fetch(apiEndpoint, {
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
