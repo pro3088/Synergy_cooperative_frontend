@@ -19,8 +19,12 @@ export async function POST(request) {
     }
 
     const data = await res.json();
-    const { id, firstName, lastName, emailAddress, status } = data;
-    const selectedData = { id, firstName, lastName, emailAddress, status };
+    const { id, firstName, lastName, emailAddress, status, dateJoined } = data;
+    let encryptedId = CryptoJS.AES.encrypt(
+      id.toString(),
+      process.env.ENCRYPTION_KEY
+    ).toString();
+    const selectedData = { id, encryptedId, firstName, lastName, emailAddress, status, dateJoined };
     const responseData = JSON.stringify(selectedData);
 
     return new Response(responseData, {

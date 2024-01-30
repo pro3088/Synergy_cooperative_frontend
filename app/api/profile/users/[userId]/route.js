@@ -9,12 +9,17 @@ async function getCookieData(request) {
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request, params ) {
+export async function GET(request, params) {
   let res;
   let base_url = process.env.BASE_URL;
   try {
-    const userId = params.params.userId;
+    const encryptedId = params.params.userId;
     const cookieData = await getCookieData(request);
+
+    let userId = CryptoJS.AES.decrypt(
+      encryptedId,
+      process.env.ENCRYPTION_KEY
+    ).toString(CryptoJS.enc.Utf8);
 
     res = await fetch(`${base_url}/api/users/${userId}`, {
       method: "GET",

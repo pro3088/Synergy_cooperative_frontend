@@ -30,12 +30,8 @@ const ProtectedRoute = ({ children }) => {
     const fetchDataAndUpdateUser = async () => {
       let util = { userId: localStorage.getItem("UTIL") };
       const encryptedId = util.userId;
-      const secretKey = process.env.ENCRYPTION_KEY;
-      let userId = CryptoJS.AES.decrypt(encryptedId, secretKey).toString(
-        CryptoJS.enc.Utf8
-      );
 
-      await fetchData(userId);
+      await fetchData(encryptedId);
     };
 
     if (!user) {

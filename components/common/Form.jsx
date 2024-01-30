@@ -35,22 +35,8 @@ const Form = ({ formConfig, isSignup }) => {
 
       if (response.ok) {
         const data = await response.json();
-        const { id, firstName, lastName, emailAddress, status } = data;
-        console.log(process.env.ENCRYPTION_KEY)
-        let encryptedId = CryptoJS.AES.encrypt(
-          id.toString(),
-          process.env.ENCRYPTION_KEY
-        ).toString();
-        const selectedData = {
-          id,
-          encryptedId,
-          firstName,
-          lastName,
-          emailAddress,
-          status,
-        };
-        login(selectedData);
-        localStorage.setItem("UTIL", encryptedId);
+        login(data);
+        localStorage.setItem("UTIL", data.encryptedId);
         router.push(`${UserStatus[res.status].apiLink}`);
       } else {
         console.error("Authentication failed:", res);
