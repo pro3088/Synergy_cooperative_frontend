@@ -9,7 +9,7 @@ pipeline {
         SECRET_KEY = "${SECRET_KEY}"
         DOCKER_USERNAME = "${DOCKER_USERNAME}"
         DOCKER_PASSWORD = "${DOCKER_PASSWORD}"
-        BASE_URL = "http://localhost:8000"
+        BASE_URL = 'http://localhost:8000'
     }
     stages {
         stage('Checkout') {
