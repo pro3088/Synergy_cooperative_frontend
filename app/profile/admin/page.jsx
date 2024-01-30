@@ -38,6 +38,8 @@ const page = () => {
   const [referrals, setReferrals] = useState(0);
   const date = new Date().toISOString().split("T")[0];
 
+  const options =[{name: "LOAN"}, {name: "ADMIN"}, {name: "INVESTOR"}]
+
   const fetchCompanyTransactions = fetchData(
     setCompanyInvestment,
     `/api/transactions/total/${"INVESTMENT"}`
@@ -133,7 +135,7 @@ const page = () => {
         <div className="flex w-full">
           <div className="bg-[var(--plain-color)] w-1/2 flex flex-col gap-4 p-4 py-12 rounded-md">
             <h5 className="font-bold text-lg">Generate Referral</h5>
-            <Button text="Generate Referral" overlayContent={<Referral />} />
+            <Button text="Generate Referral" overlayContent={<Referral options={options} />} />
           </div>
         </div>
       </div>

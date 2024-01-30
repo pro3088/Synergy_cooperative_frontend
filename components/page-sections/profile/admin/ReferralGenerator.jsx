@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useAuth } from "@components/page-sections/authentication/AuthProvider";
 
-const ReferralGenerator = () => {
+const ReferralGenerator = ({ options }) => {
   const [referralText, setReferralText] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
@@ -19,7 +19,7 @@ const ReferralGenerator = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({users: user.id}),
+          body: JSON.stringify({ users: user.id }),
         }
       );
       if (response.ok) {
@@ -54,8 +54,11 @@ const ReferralGenerator = () => {
           onChange={(e) => setSelectedOption(e.target.value)}
         >
           <option value="">Select Option</option>
-          <option value="LOAN">Loan</option>
-          <option value="INVESTOR">Investor</option>
+          {options.map((option, index) => (
+            <option key={index} value={option.name}>
+              {option.name}
+            </option>
+          ))}
         </select>
         <button
           className="text-[var(--primary-color)] cursor-pointer"
@@ -78,9 +81,7 @@ const ReferralGenerator = () => {
         </div>
       )}
 
-      {copyMessage && (
-        <div className="text-green-500 mt-2">{copyMessage}</div>
-      )}
+      {copyMessage && <div className="text-green-500 mt-2">{copyMessage}</div>}
     </div>
   );
 };
