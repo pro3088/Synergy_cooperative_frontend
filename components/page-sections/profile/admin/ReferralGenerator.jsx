@@ -34,7 +34,6 @@ const ReferralGenerator = ({ options }) => {
 
   const copyToClipboard = () => {
     console.log(referralText)
-    console.log(object)
     navigator.clipboard.writeText(String(referralText));
     setCopyMessage("Copied to clipboard!");
 
