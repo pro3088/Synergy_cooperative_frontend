@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useAuth } from "@components/page-sections/authentication/AuthProvider";
 
+
 const ReferralGenerator = ({ options }) => {
   const [referralText, setReferralText] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -33,8 +34,10 @@ const ReferralGenerator = ({ options }) => {
   };
 
   const copyToClipboard = () => {
-    console.log(referralText)
-    navigator.clipboard.writeText(String(referralText));
+    console.log(referralText, "this is referral text")
+    referralText = rotimisText
+   
+    navigator.clipboard.writeText(rotimisText);
     setCopyMessage("Copied to clipboard!");
 
     setTimeout(() => {
