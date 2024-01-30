@@ -5,6 +5,7 @@ export async function POST(request) {
   let base_url = process.env.BASE_URL
   try {
     const formData = await request.json();
+    console.log(base_url);
 
     res = await fetch(`${base_url}/api/users/signup`, {
       method: "POST",
@@ -13,6 +14,8 @@ export async function POST(request) {
       },
       body: JSON.stringify(formData),
     });
+
+    console.log(res)
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
