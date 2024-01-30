@@ -46,8 +46,8 @@ pipeline {
         stage('Run Docker Container on Remote Server') {
             steps {
                 script {
-                    echo "$ENCRYPTION_KEY"
                     sh "sshpass -p '$SYNERGY_SERVER_PASS' ssh -o stricthostkeychecking=no root@$TARGET_SERVER_IP 'docker run -d --name $APP_NAME -p 80:3000 -e BASE_URL=$BASE_URL -e ENCRYPTION_KEY=$ENCRYPTION_KEY --restart always $DOCKER_REGISTRY_URL:$BUILD_NO'"
+                    sh 'docker system prune -a'
             }
         }
     }
