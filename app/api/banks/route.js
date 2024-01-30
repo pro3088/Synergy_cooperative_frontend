@@ -48,7 +48,6 @@ export async function POST(request) {
   const cookieData = await getCookieData(request);
   try {
     const formData = await request.json();
-    console.log(formData)
 
     res = await fetch(`${base_url}/api/banks`, {
       method: "POST",

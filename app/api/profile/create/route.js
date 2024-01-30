@@ -14,15 +14,15 @@ export async function POST(request) {
       body: JSON.stringify(formData),
     });
 
-    console.log(res)
-
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
 
     const data = await res.json();
+    console.log("data: ",data)
     const { id, firstName, lastName, emailAddress, status } = data;
     const selectedData = { id, firstName, lastName, emailAddress, status };
+    console.log("selected data: ", selectedData)
     const responseData = JSON.stringify(selectedData);
 
     return new Response(responseData, {

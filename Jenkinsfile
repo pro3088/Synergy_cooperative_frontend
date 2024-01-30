@@ -38,6 +38,7 @@ pipeline {
                 script {
                     sh "sshpass -p '$SYNERGY_SERVER_PASS' ssh -o stricthostkeychecking=no root@$TARGET_SERVER_IP 'docker stop $APP_NAME || true'"
                     sh "sshpass -p '$SYNERGY_SERVER_PASS' ssh -o stricthostkeychecking=no root@$TARGET_SERVER_IP 'docker rm $APP_NAME || true'"
+                    sh "sshpass -p '$SYNERGY_SERVER_PASS' ssh -o stricthostkeychecking=no root@$TARGET_SERVER_IP 'docker image prune -a -f || true'"
                 }
             }
         }
