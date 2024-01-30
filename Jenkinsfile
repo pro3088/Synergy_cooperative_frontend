@@ -9,6 +9,7 @@ pipeline {
         SECRET_KEY = "${SECRET_KEY}"
         DOCKER_USERNAME = "${DOCKER_USERNAME}"
         DOCKER_PASSWORD = "${DOCKER_PASSWORD}"
+        BASE_URL = "http://localhost:8000"
     }
     stages {
         stage('Checkout') {
@@ -24,7 +25,7 @@ pipeline {
         stage('Docker Build and Push') {
             steps {
                 script {
-                    sh 'docker build --build-arg ENCRYPTION_KEY = $SECRET_KEY --build-arg BASE_URL = http://localhost:8000  -t $APP_NAME:1.0 .'
+                    sh 'docker build --build-arg ENCRYPTION_KEY=$SECRET_KEY --build-arg BASE_URL=$BASE_URL -t synergy_cooperative_frontend:1.0 .'
                     sh 'docker tag $APP_NAME:1.0 $DOCKER_REGISTRY_URL:$BUILD_NO'
                     sh 'echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin'
                     sh 'docker push $DOCKER_REGISTRY_URL:$BUILD_NO'
