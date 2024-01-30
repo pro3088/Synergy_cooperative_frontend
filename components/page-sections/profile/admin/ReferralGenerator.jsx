@@ -33,17 +33,13 @@ const ReferralGenerator = ({ options }) => {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(referralText);
+    console.log(referralText)
+    navigator.clipboard.writeText({referralText});
     setCopyMessage("Copied to clipboard!");
 
     setTimeout(() => {
       setCopyMessage("");
     }, 2000);
-  };
-
-  const closePopup = () => {
-    setShowPopup(false);
-    setCopyMessage("");
   };
 
   return (
