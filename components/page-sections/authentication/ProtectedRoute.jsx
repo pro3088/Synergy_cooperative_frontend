@@ -33,10 +33,6 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     fetchDataAndUpdateUser();
-
-    const intervalId = setInterval(fetchDataAndUpdateUser, 5 * 60 * 1000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
   return user ? <>{children}</> : null;
