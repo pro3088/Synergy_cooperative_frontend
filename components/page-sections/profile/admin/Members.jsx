@@ -29,6 +29,9 @@ const UserTable = () => {
 
   useEffect(() => {
     fetchUsers();
+    const intervalId = setInterval(fetchUsers, 5 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

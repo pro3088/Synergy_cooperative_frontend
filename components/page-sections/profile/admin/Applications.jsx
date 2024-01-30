@@ -33,6 +33,9 @@ const Applications = () => {
 
   useEffect(() => {
     fetchApplications();
+    const intervalId = setInterval(fetchApplications, 5 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

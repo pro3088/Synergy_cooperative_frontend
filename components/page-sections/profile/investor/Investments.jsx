@@ -13,27 +13,30 @@ const UserTable = () => {
   const [offset, setOffset] = useState(0);
   const { user } = useAuth();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userId = user.id;
-      try {
-        const response = await fetch(
-          `/api/transactions/${userId}/applications?offset=${offset}&limit=${limit}&pageSize=${pageSize}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setApplications(data.transactions);
-          setTotalPages(data.totalPages);
-        } else {
-          console.error("Failed to fetch applications.");
-        }
-      } catch (error) {
-        console.error("Error during API call:", error);
+  const fetchData = async () => {
+    const userId = user.id;
+    try {
+      const response = await fetch(
+        `/api/transactions/${userId}/applications?offset=${offset}&limit=${limit}&pageSize=${pageSize}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setApplications(data.transactions);
+        setTotalPages(data.totalPages);
+      } else {
+        console.error("Failed to fetch applications.");
       }
-    };
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
-  }, [page, limit]);
+    const intervalId = setInterval(fetchData, 5 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleNextPage = () => {
     if (page < totalPages) {

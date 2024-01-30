@@ -13,27 +13,30 @@ const ApplicationList = () => {
   const [offset, setOffset] = useState(0);
   const { user } = useAuth();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userId = user.id;
-      try {
-        const response = await fetch(
-          `/api/transactions/${userId}/applications?offset=${offset}&limit=${limit}&pageSize=${pageSize}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setApplications(data.transactions);
-          setTotalPages(data.totalPages);
-        } else {
-          console.error("Failed to fetch applications.");
-        }
-      } catch (error) {
-        console.error("Error during API call:", error);
+  const fetchData = async () => {
+    const userId = user.id;
+    try {
+      const response = await fetch(
+        `/api/transactions/${userId}/applications?offset=${offset}&limit=${limit}&pageSize=${pageSize}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setApplications(data.transactions);
+        setTotalPages(data.totalPages);
+      } else {
+        console.error("Failed to fetch applications.");
       }
-    };
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
-  }, [page, limit]);
+    const intervalId = setInterval(fetchData, 5 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -58,34 +61,34 @@ const ApplicationList = () => {
   return (
     <div className="bg-white shadow-md p-4 rounded-md w-full">
       <h2 className="text-xl font-bold mb-4">Applications</h2>
-      <div className="grid grid-cols-3 justify-between gap-4">
-        <div className="col-span-1">
-          <h3 className="text-lg font-bold mb-2">Application Id</h3>
-          {applications.map((application) => (
-            <div key={application.id} className="mb-2">
-              <Button
-                text={application.id.slice(0, 8)}
-                overlayContent={<Invoice id={application.id} />}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="col-span-1">
-          <h3 className="text-lg font-bold mb-2">Amount Required</h3>
-          {applications.map((application) => (
-            <div key={application.id} className="mb-2">
-              {application.amount}
-            </div>
-          ))}
-        </div>
-        <div className="col-span-1">
-          <h3 className="text-lg font-bold mb-2">Status</h3>
-          {applications.map((application) => (
-            <div key={application.id} className="mb-2">
-              {application.status}
-            </div>
-          ))}
-        </div>
+      <div className="w-full">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr>
+              <th className="border-b border-gray-200 px-4 py-2">ID</th>
+              <th className="border-b border-gray-200 px-4 py-2">Amount</th>
+              <th className="border-b border-gray-200 px-4 py-2">Status</th>
+            </tr>
+          </thead>
+          <tbody className="text-center">
+            {applications.map((application) => (
+              <tr key={application.id}>
+                <td className="border-b border-gray-200 px-4 py-2">
+                  <Button
+                    text={application.id.substring(0, 8)}
+                    overlayContent={<Invoice id={application.id} />}
+                  />
+                </td>
+                <td className="border-b border-gray-200 px-4 py-2">
+                  {application.amount}
+                </td>
+                <td className="border-b border-gray-200 px-4 py-2">
+                  {application.status}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       <div className="mt-4 flex justify-around items-center">
         <button

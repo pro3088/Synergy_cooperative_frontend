@@ -30,6 +30,9 @@ const Banks = () => {
 
   useEffect(() => {
     fetchBanks();
+    const intervalId = setInterval(fetchBanks, 5 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

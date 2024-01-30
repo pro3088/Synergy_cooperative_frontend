@@ -21,22 +21,23 @@ const ProtectedRoute = ({ children }) => {
       } else {
         router.replace("/login");
       }
-    } catch (error) {
-    }
+    } catch (error) {}
+  };
+
+  const fetchDataAndUpdateUser = async () => {
+    let util = { userId: localStorage.getItem("UTIL") };
+    const encryptedId = util.userId;
+
+    await fetchData(encryptedId);
   };
 
   useEffect(() => {
-    const fetchDataAndUpdateUser = async () => {
-      let util = { userId: localStorage.getItem("UTIL") };
-      const encryptedId = util.userId;
+    fetchDataAndUpdateUser();
 
-      await fetchData(encryptedId);
-    };
+    const intervalId = setInterval(fetchDataAndUpdateUser, 5 * 60 * 1000);
 
-    if (!user) {
-      fetchDataAndUpdateUser();
-    }
-  }, [user]);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return user ? <>{children}</> : null;
 };
