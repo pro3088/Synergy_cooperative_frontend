@@ -5,7 +5,6 @@ export async function POST(request) {
   let base_url = process.env.BASE_URL
   try {
     const formData = await request.json();
-    console.log(base_url);
 
     res = await fetch(`${base_url}/api/users/signup`, {
       method: "POST",
@@ -32,7 +31,6 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error("Error processing form data:", error);
-    console.log(res)
     return new Response(error, { status: 500, headers: res.headers });
   }
 }
