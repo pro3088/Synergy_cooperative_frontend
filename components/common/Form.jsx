@@ -34,8 +34,9 @@ const Form = ({ formConfig, isSignup }) => {
       });
 
       if (response.ok) {
-        const res = await response.json();
-        const { id, firstName, lastName, emailAddress, status } = res;
+        const data = await response.json();
+        const { id, firstName, lastName, emailAddress, status } = data;
+        console.log(process.env.ENCRYPTION_KEY)
         let encryptedId = CryptoJS.AES.encrypt(
           id.toString(),
           process.env.ENCRYPTION_KEY
