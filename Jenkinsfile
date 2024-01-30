@@ -45,7 +45,7 @@ pipeline {
         stage('Run Docker Container on Remote Server') {
             steps {
                 script {
-                    sh "sshpass -p '$SYNERGY_SERVER_PASS' ssh -o stricthostkeychecking=no root@$TARGET_SERVER_IP 'docker run -d --name $APP_NAME -p 80:3000 -e ENCRYPTION_KEY=$SECRET_KEY -e BASE_URL=$BASE_URL $DOCKER_REGISTRY_URL:$BUILD_NO'"
+                    sh "sshpass -p '$SYNERGY_SERVER_PASS' ssh -o stricthostkeychecking=no root@$TARGET_SERVER_IP 'docker run -d --name $APP_NAME -p 80:3000 -e ENCRYPTION_KEY=$SECRET_KEY -e BASE_URL=$BASE_URL  --restart always $DOCKER_REGISTRY_URL:$BUILD_NO'"
             }
         }
     }
