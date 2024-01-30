@@ -19,10 +19,8 @@ export async function POST(request) {
     }
 
     const data = await res.json();
-    console.log("data: ",data)
     const { id, firstName, lastName, emailAddress, status } = data;
     const selectedData = { id, firstName, lastName, emailAddress, status };
-    console.log("selected data: ", selectedData)
     const responseData = JSON.stringify(selectedData);
 
     return new Response(responseData, {
