@@ -1,3 +1,5 @@
+import CryptoJS from "crypto-js";
+
 async function getCookieData(request) {
   const cookieData = request.headers.get("cookie");
   return new Promise((resolve) =>

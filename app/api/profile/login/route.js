@@ -1,5 +1,4 @@
 import CryptoJS from "crypto-js";
-
 export const dynamic = "force-dynamic";
 
 export async function POST(request) {

@@ -1,5 +1,4 @@
 "use client";
-import CryptoJS from "crypto-js";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@components/page-sections/authentication/AuthProvider";

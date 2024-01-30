@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import { useAuth } from "@components/page-sections/authentication/AuthProvider";
 import UserStatus from "@components/common/enums/UserStatus";
-import CryptoJS from "crypto-js";
 
 const Form = ({ formConfig, isSignup }) => {
   const router = useRouter();
