@@ -1,4 +1,4 @@
-import Members from "@components/page-sections/profile/admin/members";
+import Members from "@components/page-sections/profile/admin/Members";
 
 const page = () => {
   return (
