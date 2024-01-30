@@ -36,7 +36,7 @@ const Form = ({ formConfig, isSignup }) => {
         const data = await response.json();
         login(data);
         localStorage.setItem("UTIL", data.encryptedId);
-        router.push(`${UserStatus[res.status].apiLink}`);
+        router.push(`${UserStatus[data.status].apiLink}`);
       } else {
         console.error("Authentication failed:", res);
       }
