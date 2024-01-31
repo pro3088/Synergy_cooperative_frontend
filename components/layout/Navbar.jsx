@@ -36,7 +36,7 @@ const Navbar = ({
             />
           ) : (
             <div className="flex space-x-4">
-              <NotificationIcon />
+              {/* <NotificationIcon /> */}
               <ProfileIcon />
             </div>
           )}
