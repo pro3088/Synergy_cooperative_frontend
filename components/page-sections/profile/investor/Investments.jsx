@@ -62,7 +62,7 @@ const UserTable = () => {
           <tr>
             <th className="border-b border-gray-200 px-4 py-2">ID</th>
             <th className="border-b border-gray-200 px-4 py-2">Amount</th>
-            <th className="border-b border-gray-200 px-4 py-2">Due Date</th>
+            <th className="border-b border-gray-200 px-4 py-2">Date Created</th>
             <th className="border-b border-gray-200 px-4 py-2">Status</th>
           </tr>
         </thead>
@@ -83,7 +83,7 @@ const UserTable = () => {
                 {application.amount}
               </td>
               <td className="border-b border-gray-200 px-4 py-2">
-                {application.dueDate}
+                {application.dateCreated}
               </td>
               <td className="border-b border-gray-200 px-4 py-2">
                 {application.status}
