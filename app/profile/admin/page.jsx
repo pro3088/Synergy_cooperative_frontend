@@ -92,21 +92,21 @@ const page = () => {
           <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
             <div>
               <h5 className="text-lg font-bold">Company Investments</h5>
-              <span className="text-[var(--money-green)]">$ {companyInvestments}</span>
+              <span className="text-[var(--money-green)]">₦ {companyInvestments}</span>
             </div>
             <div>
               <h5 className="text-lg font-bold">Company Total Withdrawn</h5>
-              <span className="text-[var(--money-green)]">$ {companyWithdrawn}</span>
+              <span className="text-[var(--money-green)]">₦ {companyWithdrawn}</span>
             </div>
           </div>
           <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
           <div>
               <h5 className="text-lg font-bold">Total Investments</h5>
-              <span className="text-[var(--money-green)]">$ {investments}</span>
+              <span className="text-[var(--money-green)]">₦ {investments}</span>
             </div>
             <div>
               <h5 className="text-lg font-bold">Total Withdrawn</h5>
-              <span className="text-[var(--money-green)]">$ {withdrawn}</span>
+              <span className="text-[var(--money-green)]">₦ {withdrawn}</span>
             </div>
           </div>
           <div className="flex w-full space-x-2 h-full">

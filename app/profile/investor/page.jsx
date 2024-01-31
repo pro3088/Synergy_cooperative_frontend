@@ -77,21 +77,21 @@ const page = () => {
           <div className="flex flex-col gap-2 bg-[var(--plain-color)] p-4 rounded-md w-full">
             <div>
               <h5 className="text-lg font-bold">Total Investments</h5>
-              <span className="text-[var(--money-green)]">$ {investments}</span>
+              <span className="text-[var(--money-green)]">₦ {investments}</span>
             </div>
             <div>
               <h5 className="text-lg font-bold">Total Withdrawn</h5>
-              <span className="text-[var(--money-green)]">$ {withdrawn}</span>
+              <span className="text-[var(--money-green)]">₦ {withdrawn}</span>
             </div>
           </div>
           <div className="flex flex-col gap-2 bg-[var(--plain-color)] p-4 rounded-md w-full">
             <div>
               <h5 className="text-lg font-bold">Remaining Investment</h5>
-              <span className="text-[var(--money-green)]">$ {remainer}</span>
+              <span className="text-[var(--money-green)]">₦ {remainer}</span>
             </div>
             <div>
               <h5 className="text-lg font-bold">Total Earning</h5>
-              <span className="text-[var(--money-green)]">$ {earning}</span>
+              <span className="text-[var(--money-green)]">₦ {earning}</span>
             </div>
           </div>
           <div className="flex flex w-full space-x-2 h-full">
