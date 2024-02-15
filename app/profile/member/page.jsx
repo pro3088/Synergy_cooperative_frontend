@@ -4,6 +4,7 @@ import Button from "@components/common/OverlayButton";
 import { useAuth } from "@components/page-sections/authentication/AuthProvider";
 import ApplicationOverlay from "@components/page-sections/profile/loanee/ApplicationOverlay";
 import Applications from "@components/page-sections/profile/loanee/Applications";
+import withAuth from "@/components/page-sections/authentication/WithAuth";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {
@@ -105,4 +106,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default withAuth(page, ['member']);

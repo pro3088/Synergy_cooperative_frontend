@@ -38,7 +38,7 @@ const page = () => {
   const [referrals, setReferrals] = useState(0);
   const date = new Date().toISOString().split("T")[0];
 
-  const options =[{name: "LOAN"}, {name: "ADMIN"}, {name: "INVESTOR"}]
+  const options =[{name: "MEMBER"}, {name: "ADMIN"}, {name: "FINANCIAL_MEMBER"}]
 
   const fetchCompanyTransactions = fetchData(
     setCompanyInvestment,
@@ -58,8 +58,8 @@ const page = () => {
     `/api/transactions/total/${"WITHDRAW"}/${userId}`
   );
 
-  const typeInvestors = "INVESTOR";
-  const typeLoanees = "LOAN";
+  const typeInvestors = "FINANCIAL_MEMBER";
+  const typeLoanees = "MEMBER";
   const fetchReferrals = fetchData(
     setReferrals,
     `/api/profile/referrals/${userId}/count`

@@ -1,7 +1,7 @@
 const UserStatus = {
   ADMIN: { apiLink: "/profile/admin" },
-  LOAN: { apiLink: "/profile/loanee" },
-  INVESTOR: { apiLink: "/profile/investor" },
+  FINANCIAL_MEMBER: { apiLink: "/profile/financial_member" },
+  MEMBER: { apiLink: "/profile/member" },
 };
 
 export default UserStatus;

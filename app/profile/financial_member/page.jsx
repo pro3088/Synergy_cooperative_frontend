@@ -39,7 +39,7 @@ const page = () => {
   const date = new Date().toISOString().split("T")[0];
   const remainer = investments - withdrawn;
 
-  const options =[{name: "LOAN"}, {name: "INVESTOR"}]
+  const options =[{name: "MEMBER"}, {name: "FINANCIAL_MEMBER"}]
 
   const fetchTransactions = fetchData(
     setInvestment,
