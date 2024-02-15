@@ -1,5 +1,5 @@
 "use client"
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
 import UserStatus from "@components/common/enums/UserStatus";
@@ -28,11 +28,11 @@ export default function WithAuth(Component, allowedRoles) {
     }, [user.status, allowedRoles, router]);
 
     if (loading) {
-      return <p>Loading...</p>; // You can replace this with a loader component
+      return <p>Loading...</p>;
     }
 
     if (!isAuthorized) {
-      return null; // Or any other component you want to render for unauthorized users
+      return null;
     }
 
     return <Component {...props} />;

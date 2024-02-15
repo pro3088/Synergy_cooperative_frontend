@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 import UserStatus from "@components/common/enums/UserStatus";
 
 const Form = ({ formConfig, isSignup }) => {

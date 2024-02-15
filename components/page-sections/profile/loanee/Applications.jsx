@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 import Invoice from "@components/page-sections/profile/Invoice";
 import Button from "@components/common/OverlayButton";
 

@@ -1,6 +1,6 @@
 "use client"
 import Navbar from "@components/layout/profile/Navbar";
-import withAuth from "@/components/page-sections/authentication/WithAuth";
+import withAuth from "@/components/common/authentication/WithAuth";
 
 const items = [
     {name: "Dashboard", link: "/profile/admin"},

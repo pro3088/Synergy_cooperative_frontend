@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 
 
 const ReferralGenerator = ({ options }) => {

@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import Button from "@components/common/OverlayButton";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 import ApplicationOverlay from "@components/page-sections/profile/loanee/ApplicationOverlay";
 import Applications from "@components/page-sections/profile/loanee/Applications";
-import withAuth from "@/components/page-sections/authentication/WithAuth";
+import withAuth from "@/components/common/authentication/WithAuth";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {

@@ -1,6 +1,6 @@
 import Navbar from "@components/layout/Navbar";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
-import ProtectedRoute from "@components/page-sections/authentication/ProtectedRoute";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
+import ProtectedRoute from "@/components/common/authentication/ProtectedRoute";
 
 export default function RootLayout({ children }) {
   return (

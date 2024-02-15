@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Button from "@components/common/OverlayButton";
 import Referral from "@components/page-sections/profile/admin/ReferralGenerator";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {

@@ -1,5 +1,5 @@
 import "./globals.css";
-import { AuthProvider } from "@components/page-sections/authentication/AuthProvider";
+import { AuthProvider } from "@/components/common/authentication/AuthProvider";
 
 export const metadata = {
   title: "Synergy Cooperative",
