@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Button from "@components/common/OverlayButton";
 import Referral from "@components/page-sections/profile/admin/ReferralGenerator";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
+import NotificationIcon from "@components/page-sections/profile/NotificationIcon";
+import ProfileIcon from "@components/page-sections/profile/profileIcon";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {
@@ -39,7 +41,7 @@ const page = () => {
   const date = new Date().toISOString().split("T")[0];
   const remainer = investments - withdrawn;
 
-  const options =[{name: "MEMBER"}, {name: "FINANCIAL_MEMBER"}]
+  const options = [{ name: "MEMBER" }, { name: "FINANCIAL_MEMBER" }];
 
   const fetchTransactions = fetchData(
     setInvestment,
@@ -53,7 +55,10 @@ const page = () => {
     setTransactions,
     `/api/transactions/total/${type}/${userId}/count`
   );
-  const fetchTotalEarning = fetchData(setEarning, `/api/transactions/total/earning/${userId}`)
+  const fetchTotalEarning = fetchData(
+    setEarning,
+    `/api/transactions/total/earning/${userId}`
+  );
 
   useEffect(() => {
     fetchTransactions();
@@ -67,7 +72,11 @@ const page = () => {
   }, []);
 
   return (
-    <div className="w-3/4 pr-12 pt-12 left-0">
+    <div className="flex flex-col w-3/4 pr-12 pt-8">
+      <div className="flex space-x-4 ml-auto mr-0">
+        <NotificationIcon />
+        <ProfileIcon />
+      </div>
       <div className="flex flex-col w-full h-full space-y-4">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Dashboard</h3>
@@ -120,7 +129,10 @@ const page = () => {
         <div className="flex w-full">
           <div className="bg-[var(--plain-color)] w-1/2 flex flex-col gap-4 p-4 py-12 rounded-md">
             <h5 className="font-bold text-lg">Generate Referral</h5>
-            <Button text="Generate Referral" overlayContent={<Referral options={options} />} />
+            <Button
+              text="Generate Referral"
+              overlayContent={<Referral options={options} />}
+            />
           </div>
         </div>
       </div>

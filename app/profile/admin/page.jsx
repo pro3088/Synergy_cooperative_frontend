@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Button from "@components/common/OverlayButton";
 import Referral from "@components/page-sections/profile/admin/ReferralGenerator";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
+import NotificationIcon from "@components/page-sections/profile/NotificationIcon";
+import ProfileIcon from "@components/page-sections/profile/profileIcon";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {
@@ -38,7 +40,11 @@ const page = () => {
   const [referrals, setReferrals] = useState(0);
   const date = new Date().toISOString().split("T")[0];
 
-  const options =[{name: "MEMBER"}, {name: "ADMIN"}, {name: "FINANCIAL_MEMBER"}]
+  const options = [
+    { name: "MEMBER" },
+    { name: "ADMIN" },
+    { name: "FINANCIAL_MEMBER" },
+  ];
 
   const fetchCompanyTransactions = fetchData(
     setCompanyInvestment,
@@ -82,8 +88,12 @@ const page = () => {
   }, []);
 
   return (
-    <div className="w-3/4 pr-12 pt-12 left-0">
-      <div className="flex flex-col w-full h-full space-y-4">
+    <div className="flex flex-col w-3/4 pr-12 pt-8">
+      <div className="flex space-x-4 ml-auto mr-0">
+        <NotificationIcon />
+        <ProfileIcon />
+      </div>
+      <div className="flex flex-col w-full h-full space-y-4 left-0">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Dashboard</h3>
           <h5>Good to see you here</h5>
@@ -92,15 +102,19 @@ const page = () => {
           <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
             <div>
               <h5 className="text-lg font-bold">Company Investments</h5>
-              <span className="text-[var(--money-green)]">₦ {companyInvestments}</span>
+              <span className="text-[var(--money-green)]">
+                ₦ {companyInvestments}
+              </span>
             </div>
             <div>
               <h5 className="text-lg font-bold">Company Total Withdrawn</h5>
-              <span className="text-[var(--money-green)]">₦ {companyWithdrawn}</span>
+              <span className="text-[var(--money-green)]">
+                ₦ {companyWithdrawn}
+              </span>
             </div>
           </div>
           <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
-          <div>
+            <div>
               <h5 className="text-lg font-bold">Total Investments</h5>
               <span className="text-[var(--money-green)]">₦ {investments}</span>
             </div>
@@ -135,7 +149,10 @@ const page = () => {
         <div className="flex w-full">
           <div className="bg-[var(--plain-color)] w-1/2 flex flex-col gap-4 p-4 py-12 rounded-md">
             <h5 className="font-bold text-lg">Generate Referral</h5>
-            <Button text="Generate Referral" overlayContent={<Referral options={options} />} />
+            <Button
+              text="Generate Referral"
+              overlayContent={<Referral options={options} />}
+            />
           </div>
         </div>
       </div>

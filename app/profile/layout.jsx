@@ -5,11 +5,11 @@ import ProtectedRoute from "@/components/common/authentication/ProtectedRoute";
 export default function RootLayout({ children }) {
   return (
     <ProtectedRoute >
-        <Navbar
+        {/* <Navbar
           linkColor="black"
           showBackground={false}
           plainBackground={true}
-        />
+        /> */}
         {children}
     </ProtectedRoute>
   );
