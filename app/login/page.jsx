@@ -17,7 +17,7 @@ const Page = () => {
         linkColor="black"
         buttonTextColor="blue"
       />
-      <div className="flex flex-row justify-between items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-screen-2xl px-4 md:px-12 lg:px-28">
+      <div className="flex flex-col flex-col-reverse md:flex-row justify-between items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-screen-2xl px-4 md:px-12 lg:px-28">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <h4 className="text-2xl font-bold">Log in to your account</h4>
@@ -25,7 +25,7 @@ const Page = () => {
           </div>
           <Form formConfig={formConfig} isSignup={false}/>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mb-4">
           <h4 className="text-2xl font-bold">No Account?</h4>
           <p>Sign up and start exploring</p>
           <Button
