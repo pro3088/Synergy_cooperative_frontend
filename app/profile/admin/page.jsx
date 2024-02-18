@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "@components/common/OverlayButton";
 import Referral from "@components/page-sections/profile/admin/ReferralGenerator";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
-import NotificationIcon from "@components/page-sections/profile/NotificationIcon";
-import ProfileIcon from "@components/page-sections/profile/profileIcon";
+import Panel from "@/components/page-sections/profile/Panel";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {
@@ -82,17 +81,16 @@ const page = () => {
   useEffect(() => {
     fetchCompanyTransactions();
     fetchCompanyWithdrawn();
+    fetchTransactions();
+    fetchWithdrawn();
     fetchReferrals();
     fetchInvestors();
     fetchLoanees();
   }, []);
 
   return (
-    <div className="flex flex-col w-3/4 pr-12 pt-8">
-      <div className="flex space-x-4 ml-auto mr-0">
-        <NotificationIcon />
-        <ProfileIcon />
-      </div>
+    <div className="flex flex-col w-3/4 pr-12 pt-4">
+      <Panel />
       <div className="flex flex-col w-full h-full space-y-4 left-0">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Dashboard</h3>

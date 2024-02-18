@@ -43,9 +43,7 @@ const ProfileIcon = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <span className="text-white cursor-pointer" onClick={toggleDropdown}>
-        👤
-      </span>
+      <img src="/user.svg" alt="profile" className="cursor-pointer rounded-full bg-gray-200 hover:bg-gray-300 p-2" onClick={toggleDropdown} />
       {isDropdownVisible && (
         <div className="flex flex-col absolute top-8 right-0 bg-[var(--plain-color)] p-2 shadow-md rounded-md gap-2 ">
           <div className="flex gap-4 items-center p-2 bg-white rounded-md">
