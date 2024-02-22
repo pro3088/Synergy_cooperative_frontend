@@ -18,10 +18,8 @@ export async function GET(request, params) {
     const encryptedId = params.params.userId;
     const cookieData = await getCookieData(request);
 
-    let userId = CryptoJS.AES.decrypt(
-      encryptedId,
-      process.env.ENCRYPTION_KEY
-    ).toString(CryptoJS.enc.Utf8);
+    const encodedWord = CryptoJS.enc.Base64.parse(encryptedId);
+    const userId = CryptoJS.enc.Utf8.stringify(encodedWord);
 
     res = await fetch(`${base_url}/api/users/${userId}`, {
       method: "GET",

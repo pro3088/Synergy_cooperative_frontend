@@ -1,6 +1,4 @@
 import Button from "@components/common/Button";
-import NotificationIcon from "@components/page-sections/profile/NotificationIcon";
-import ProfileIcon from "@components/page-sections/profile/profileIcon";
 
 const Navbar = ({
   buttonText,

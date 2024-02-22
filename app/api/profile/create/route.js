@@ -21,10 +21,10 @@ export async function POST(request) {
 
     const data = await res.json();
     const { id, firstName, lastName, emailAddress, status, dateJoined } = data;
-    let encryptedId = CryptoJS.AES.encrypt(
-      id.toString(),
-      process.env.ENCRYPTION_KEY
-    ).toString(CryptoJS.enc.Base64);
+
+    const encodedWord = CryptoJS.enc.Utf8.parse(id.toString());
+    let encryptedId = CryptoJS.enc.Base64.stringify(encodedWord);
+    
     const selectedData = { id, encryptedId, firstName, lastName, emailAddress, status, dateJoined };
     const responseData = JSON.stringify(selectedData);
 
