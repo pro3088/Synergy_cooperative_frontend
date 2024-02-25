@@ -16,8 +16,8 @@ export async function POST(request) {
     });
 
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.message);
+      const errorText = await res.text();
+      throw new Error(errorText);
     }
 
     const data = await res.json();
@@ -34,7 +34,6 @@ export async function POST(request) {
       headers: res.headers,
     });
   } catch (error) {
-    console.error("Error processing form data:", error);
-    return new Response(error, { status: 500 });
+    return new Response(error, { status: res.status });
   }
 }

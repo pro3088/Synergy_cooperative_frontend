@@ -31,7 +31,8 @@ export async function GET(request, params) {
     });
 
     if (!res.ok) {
-      throw new Error(res.message);
+      const errorText = await res.text();
+      throw new Error(errorText);
     }
 
     const data = await res.json();
@@ -44,7 +45,6 @@ export async function GET(request, params) {
       headers: res.headers,
     });
   } catch (error) {
-    console.error("Error processing data:", error);
-    return new Response(error, { status: 500, headers: res.headers });
+    return new Response(error, { status: res.status });
   }
 }

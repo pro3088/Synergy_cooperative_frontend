@@ -16,7 +16,8 @@ export async function POST(request) {
     });
 
     if (!res.ok) {
-      throw new Error("Failed to fetch data");
+      const errorText = await res.text();
+      throw new Error(errorText);
     }
 
     const data = await res.json();
@@ -24,7 +25,7 @@ export async function POST(request) {
 
     const encodedWord = CryptoJS.enc.Utf8.parse(id.toString());
     let encryptedId = CryptoJS.enc.Base64.stringify(encodedWord);
-    
+
     const selectedData = { id, encryptedId, firstName, lastName, emailAddress, status, dateJoined };
     const responseData = JSON.stringify(selectedData);
 
@@ -33,7 +34,6 @@ export async function POST(request) {
       headers: res.headers,
     });
   } catch (error) {
-    console.error("Error processing form data:", error);
-    return new Response(error, { status: 500, headers: res.headers });
+    return new Response(error, { status: res.status });
   }
 }

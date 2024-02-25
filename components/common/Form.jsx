@@ -42,11 +42,12 @@ const Form = ({ formConfig, isSignup }) => {
         localStorage.setItem("UTIL", data.encryptedId);
         router.push(`${UserStatus[data.status].apiLink}`);
       } else {
-        console.error("Authentication failed");
-        setErrorMessage("Authentication failed: Username or password is not correct");
-      }
+        const errorText = await response.text();
+        console.log(errorText)
+        setErrorMessage(errorText);
+    }
     } catch (error) {
-      console.error("Error during authentication:", error);
+      setErrorMessage("Details could not be fetched. Try again!");
     }
   };
 

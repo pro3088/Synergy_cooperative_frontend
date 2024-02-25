@@ -6,7 +6,7 @@ const Navbar = ({ items }) => {
   const pathname = usePathname();
 
   return (
-    <div className=" h-screen bg-[var(--plain-color)] w-1/4 flex flex-col items-center">
+    <div className=" h-[100vh] bg-[var(--plain-color)] w-1/4 flex flex-col items-center">
       <Link href={"/"} className="font-bold w-full py-8 text-center">
         {" "}
         Synergy Cooperative LTD{" "}
