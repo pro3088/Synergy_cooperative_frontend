@@ -6,7 +6,7 @@ const items = [
     {name: "Dashboard", link: "/profile/admin", image: "/profiles/home.svg"},
     {name: "Members", link: "/profile/admin/members", image: "/profiles/members.svg"},
     {name: "Applications", link: "/profile/admin/applications", image: "/profiles/application.svg"},
-    {name: "Bank", link: "/profile/admin/bank", image: "/profiles/home.svg"}
+    {name: "Bank", link: "/profile/admin/bank", image: "/profiles/bank.svg"}
 ]
 
 function RootLayout({ children }) {
