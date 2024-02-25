@@ -4,7 +4,7 @@ import Button from "@components/common/OverlayButton";
 import Status from "@components/page-sections/profile/admin/Status";
 import Invoice from "@components/page-sections/profile/Invoice";
 
-function fetchData(setData, apiEndpoint) {
+function fetchData(setData, onSubmission, apiEndpoint) {
   return async () => {
     try {
       const response = await fetch(apiEndpoint, {
@@ -16,6 +16,7 @@ function fetchData(setData, apiEndpoint) {
       });
       if (response.ok) {
         const data = await response.json();
+        onSubmission(true);
         setData(data);
       } else {
         console.error("Failed to fetch data");
@@ -26,10 +27,12 @@ function fetchData(setData, apiEndpoint) {
   };
 }
 
+
 const Applications = () => {
   const [applicationData, setApplicationData] = useState([]);
+  const [onSubmission, setOnSubmission] = useState(false)
 
-  const fetchApplications = fetchData(setApplicationData, "/api/transactions");
+  const fetchApplications = fetchData(setApplicationData, setOnSubmission, "/api/transactions");
 
   useEffect(() => {
     fetchApplications();

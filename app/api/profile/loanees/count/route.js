@@ -14,7 +14,7 @@ export async function GET(request) {
   let base_url = process.env.BASE_URL;
   const cookieData = await getCookieData(request);
   try {
-    const status = "LOAN";
+    const status = "MEMBER";
     res = await fetch(`${base_url}/api/users/${status}/count`, {
       method: "GET",
       credentials: "include",

@@ -1,8 +1,7 @@
 "use client";
-import CryptoJS from "crypto-js";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 
 const ProtectedRoute = ({ children }) => {
   const router = useRouter();
@@ -30,12 +29,8 @@ const ProtectedRoute = ({ children }) => {
     const fetchDataAndUpdateUser = async () => {
       let util = { userId: localStorage.getItem("UTIL") };
       const encryptedId = util.userId;
-      const secretKey = process.env.ENCRYPTION_KEY;
-      let userId = CryptoJS.AES.decrypt(encryptedId, secretKey).toString(
-        CryptoJS.enc.Utf8
-      );
 
-      await fetchData(userId);
+      await fetchData(encryptedId);
     };
 
     if (!user) {

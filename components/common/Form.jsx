@@ -1,15 +1,18 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 import UserStatus from "@components/common/enums/UserStatus";
-import CryptoJS from "crypto-js";
 
 const Form = ({ formConfig, isSignup }) => {
   const router = useRouter();
   const { login } = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setErrorMessage(null);
 
     const formData = {};
     formConfig.forEach((field, index) => {
@@ -34,62 +37,56 @@ const Form = ({ formConfig, isSignup }) => {
       });
 
       if (response.ok) {
-        const res = await response.json();
-        const { id, firstName, lastName, emailAddress, status } = res;
-        let encryptedId = CryptoJS.AES.encrypt(
-          id.toString(),
-          process.env.ENCRYPTION_KEY
-        ).toString();
-        const selectedData = {
-          id,
-          encryptedId,
-          firstName,
-          lastName,
-          emailAddress,
-          status,
-        };
-        login(selectedData);
-        localStorage.setItem("UTIL", encryptedId);
-        router.push(`${UserStatus[res.status].apiLink}`);
+        const data = await response.json();
+        login(data);
+        localStorage.setItem("UTIL", data.encryptedId);
+        router.push(`${UserStatus[data.status].apiLink}`);
       } else {
-        console.error("Authentication failed:", res);
-      }
+        const errorText = await response.text();
+        console.log(errorText)
+        setErrorMessage(errorText);
+    }
     } catch (error) {
-      console.error("Error during authentication:", error);
+      setErrorMessage("Details could not be fetched. Try again!");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {formConfig.map((field, index) => (
-        <div key={index} className="mb-4">
-          <label
-            htmlFor={`${field.name}-${index}`}
-            className="block text-sm font-medium text-gray-700"
-          >
-            {field.label}
+    <div>
+      {errorMessage && (
+        <div className="w-56 text-red-600 mb-4">{errorMessage}</div>
+      )}
+      <form onSubmit={handleSubmit}>
+        {formConfig.map((field, index) => (
+          <div key={index} className="mb-4">
+            <label
+              htmlFor={`${field.name}-${index}`}
+              className="block text-sm font-medium text-gray-700"
+            >
+              {field.label}
+            </label>
+            <input
+              type={field.type || "text"}
+              id={`${field.name}-${index}`}
+              placeholder={`${field.label.toLowerCase()}`}
+              className="mt-1 p-2 border rounded-md w-full bg-[var(--plain-color)]"
+            />
+          </div>
+        ))}
+        <div className="mb-4">
+          <input type="checkbox" id="remember-me" className="mr-2" />
+          <label htmlFor="remember-me" className="text-sm text-gray-700">
+            Remember Me
           </label>
-          <input
-            type={field.type || "text"}
-            id={`${field.name}-${index}`}
-            placeholder={`${field.label.toLowerCase()}`}
-            className="mt-1 p-2 border rounded-md w-full bg-[var(--plain-color)]"
-          />
         </div>
-      ))}
-      <div className="mb-4">
-        <input type="checkbox" id="remember-me" className="mr-2" />
-        <label htmlFor="remember-me" className="text-sm text-gray-700">
-          Remember Me
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="bg-[var(--primary-color)] text-white w-full px-4 py-2 rounded-md"
-      >
-        Submit
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="bg-[var(--primary-color)] text-white w-full px-4 py-2 rounded-md"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
 

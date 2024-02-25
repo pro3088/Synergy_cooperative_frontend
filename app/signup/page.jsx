@@ -20,8 +20,8 @@ const page = () => {
             linkColor="black"
             buttonTextColor="blue"
         />
-        <div className="flex flex-row justify-between items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-screen-2xl px-4 md:px-12 lg:px-28">
-            <div className="flex flex-col gap-2">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-screen-2xl py-4 px-4 md:px-12 lg:px-28">
+            <div className="flex flex-col gap-2 pb-4 md:pb-0">
                 <h4 className="text-2xl font-bold">
                     Already signed up?
                 </h4>
@@ -30,7 +30,7 @@ const page = () => {
                 </p>
                 <Button text="Log in" textColor="blue" link={"/login"} border={true} />
             </div>
-            <div className="flex flex-col gap-4 w-1/3">
+            <div className="flex flex-col gap-4 md:w-1/3">
                 <div className=" flex flex-col gap-1">
                     <h4 className="text-2xl font-bold">
                         Sign up for an account

@@ -14,7 +14,7 @@ function HeroSection() {
       <div className="flex flex-col gap-4 container mx-auto max-w-screen-2xl px-4 md:px-12 lg:px-28">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-bold">
-            Apply for your loan
+            Become a member
           </h1>
           <h3 className="text-lg">
             Apply with trust and confidence

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 
 function getInitial(name) {
   if (typeof name !== "string" || name.length === 0) {
@@ -13,11 +13,11 @@ function getInitial(name) {
 const ProfileIcon = () => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
-  const name = "John";
-  const fullname = "John Doe";
-  const email = "johndoe@gmail.com";
+  const name = user.firstName;
+  const fullname = user.firstName + " " + user.lastName;
+  const email = user.emailAddress;
   const initial = getInitial(name);
 
   const toggleDropdown = () => {
@@ -43,13 +43,11 @@ const ProfileIcon = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <span className="text-white cursor-pointer" onClick={toggleDropdown}>
-        👤
-      </span>
+      <img src="/user.svg" alt="profile" className="cursor-pointer rounded-full bg-gray-200 hover:bg-gray-300 p-2" onClick={toggleDropdown} />
       {isDropdownVisible && (
         <div className="flex flex-col absolute top-8 right-0 bg-[var(--plain-color)] p-2 shadow-md rounded-md gap-2 ">
           <div className="flex gap-4 items-center p-2 bg-white rounded-md">
-            <div className="h-20 w-20 rounded-full bg-black flex items-center justify-center text-white text-xl font-bold mr-2">
+            <div className="h-14 w-14 rounded-full bg-black flex items-center justify-center text-white text-xl font-bold mr-2">
               {initial}
             </div>
             <div className="flex flex-col gap-1">

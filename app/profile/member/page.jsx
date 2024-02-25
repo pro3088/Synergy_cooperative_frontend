@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import Button from "@components/common/OverlayButton";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 import ApplicationOverlay from "@components/page-sections/profile/loanee/ApplicationOverlay";
 import Applications from "@components/page-sections/profile/loanee/Applications";
+import withAuth from "@/components/common/authentication/WithAuth";
+import Panel from "@/components/page-sections/profile/Panel";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {
@@ -43,10 +45,15 @@ const page = () => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  const fetchStatus = fetchData(setStatus, `/api/transactions/${userId}/status`);
+  const fetchStatus = fetchData(
+    setStatus,
+    `/api/transactions/${userId}/status`
+  );
   const fetchPay = fetchData(setPay, `/api/transactions/${userId}/getTotal`);
-  const fetchAmount = fetchData(setAmount, `/api/transactions/total/${"LOAN"}/${userId}`);
-  
+  const fetchAmount = fetchData(
+    setAmount,
+    `/api/transactions/total/${"LOAN"}/${userId}`
+  );
 
   useEffect(() => {
     fetchPay();
@@ -56,8 +63,9 @@ const page = () => {
 
   return (
     <section>
-      <div className="flex flex-col gap-2 container mx-auto max-w-screen-2xl px-4 md:px-12 lg:px-28">
-        <div className="flex items-center flex-no-shrink items-stretch justify-between mt-8">
+      <div className="flex flex-col gap-2 container mx-auto max-w-screen-2xl px-4 md:px-12 lg:px-28 pt-4">
+        <Panel />
+        <div className="flex items-center flex-no-shrink items-stretch justify-between mt-4">
           <h5 className="font-bold">Hello {name}</h5>
           <Button
             text="Add Application"
@@ -105,4 +113,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default withAuth(page, ["member"]);

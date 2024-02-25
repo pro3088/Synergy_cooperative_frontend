@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAuth } from "@components/page-sections/authentication/AuthProvider";
+import { useAuth } from "@/components/common/authentication/AuthProvider";
 import Button from "@components/common/OverlayButton";
 import Invoice from "@components/page-sections/profile/Invoice";
 
@@ -13,27 +13,27 @@ const UserTable = () => {
   const [offset, setOffset] = useState(0);
   const { user } = useAuth();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userId = user.id;
-      try {
-        const response = await fetch(
-          `/api/transactions/${userId}/applications?offset=${offset}&limit=${limit}&pageSize=${pageSize}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setApplications(data.transactions);
-          setTotalPages(data.totalPages);
-        } else {
-          console.error("Failed to fetch applications.");
-        }
-      } catch (error) {
-        console.error("Error during API call:", error);
+  const fetchData = async () => {
+    const userId = user.id;
+    try {
+      const response = await fetch(
+        `/api/transactions/${userId}/applications?offset=${offset}&limit=${limit}&pageSize=${pageSize}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setApplications(data.transactions);
+        setTotalPages(data.totalPages);
+      } else {
+        console.error("Failed to fetch applications.");
       }
-    };
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
-  }, [page, limit]);
+  }, []);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -62,7 +62,7 @@ const UserTable = () => {
           <tr>
             <th className="border-b border-gray-200 px-4 py-2">ID</th>
             <th className="border-b border-gray-200 px-4 py-2">Amount</th>
-            <th className="border-b border-gray-200 px-4 py-2">Due Date</th>
+            <th className="border-b border-gray-200 px-4 py-2">Date Created</th>
             <th className="border-b border-gray-200 px-4 py-2">Status</th>
           </tr>
         </thead>
@@ -83,7 +83,7 @@ const UserTable = () => {
                 {application.amount}
               </td>
               <td className="border-b border-gray-200 px-4 py-2">
-                {application.dueDate}
+                {application.dateCreated}
               </td>
               <td className="border-b border-gray-200 px-4 py-2">
                 {application.status}

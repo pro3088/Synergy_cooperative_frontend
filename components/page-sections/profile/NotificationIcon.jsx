@@ -24,7 +24,7 @@ const NotificationIcon = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <span className="text-white cursor-pointer" onClick={toggleDropdown}>🔔</span>
+      <img src="/notification.svg" alt="notification" className="cursor-pointer h-[24px]" onClick={toggleDropdown} />
       {isDropdownVisible && (
         <div className="absolute top-8 right-0 bg-white p-4 shadow-md">
           {/* Notification dropdown content */}

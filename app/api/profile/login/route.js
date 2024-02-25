@@ -1,5 +1,4 @@
 import CryptoJS from "crypto-js";
-
 export const dynamic = "force-dynamic";
 
 export async function POST(request) {
@@ -17,16 +16,16 @@ export async function POST(request) {
     });
 
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.message);
+      const errorText = await res.text();
+      throw new Error(errorText);
     }
 
     const data = await res.json();
     const { id, firstName, lastName, emailAddress, status, dateJoined } = data;
-    let encryptedId = CryptoJS.AES.encrypt(
-      id.toString(),
-      process.env.ENCRYPTION_KEY
-    ).toString();
+
+    const encodedWord = CryptoJS.enc.Utf8.parse(id.toString());
+    let encryptedId = CryptoJS.enc.Base64.stringify(encodedWord);
+
     const selectedData = { id, encryptedId, firstName, lastName, emailAddress, status, dateJoined };
     const responseData = JSON.stringify(selectedData);
 
@@ -35,7 +34,6 @@ export async function POST(request) {
       headers: res.headers,
     });
   } catch (error) {
-    console.error("Error processing form data:", error);
-    return new Response(error, { status: 500 });
+    return new Response(error, { status: res.status });
   }
 }
