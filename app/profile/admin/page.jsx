@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Button from "@components/common/OverlayButton";
 import Referral from "@components/page-sections/profile/admin/ReferralGenerator";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
-import Panel from "@/components/page-sections/profile/Panel";
 
 function fetchData(setData, apiEndpoint) {
   return async () => {
@@ -89,15 +88,16 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-3/4 pr-12 pt-4">
-      <Panel />
+    <div className="flex flex-col w-full pt-4">
       <div className="flex flex-col w-full h-full space-y-4 left-0">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Dashboard</h3>
           <h5>Good to see you here</h5>
         </div>
-        <div className="flex w-full justify-around space-x-2">
-          <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
+        <div className="flex flex-col lg:flex-row w-full justify-around space-y-2 md:space-y-0 lg:space-x-2">
+          {/* Analytics section */}
+          <div className="w-full flex flex-row space-x-2">
+            <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
             <div>
               <h5 className="text-lg font-bold">Company Investments</h5>
               <span className="text-[var(--money-green)]">
@@ -121,6 +121,8 @@ const page = () => {
               <span className="text-[var(--money-green)]">₦ {withdrawn}</span>
             </div>
           </div>
+          </div>
+          {/* Data section */}
           <div className="flex w-full space-x-2 h-full">
             <div className="flex flex-col w-1/2 space-y-2 h-full">
               <div className="bg-[var(--plain-color)] h-1/2 p-4 rounded-md w-full font-bold">
@@ -145,7 +147,7 @@ const page = () => {
           </div>
         </div>
         <div className="flex w-full">
-          <div className="bg-[var(--plain-color)] w-1/2 flex flex-col gap-4 p-4 py-12 rounded-md">
+          <div className="bg-[var(--plain-color)] w-full md:w-1/2 flex flex-col gap-4 p-4 py-12 rounded-md">
             <h5 className="font-bold text-lg">Generate Referral</h5>
             <Button
               text="Generate Referral"

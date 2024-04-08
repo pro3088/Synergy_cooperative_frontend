@@ -71,34 +71,41 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-3/4 pr-12 pt-4">
-      <Panel />
+    <div className="flex flex-col w-full pt-4">
       <div className="flex flex-col w-full h-full space-y-4">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Dashboard</h3>
           <h5>Good to see you here</h5>
         </div>
         <div className="flex w-full justify-around space-x-2">
-          <div className="flex flex-col gap-2 bg-[var(--plain-color)] p-4 rounded-md w-full">
+          {/* Analytics section */}
+          <div className="w-full flex flex-row space-x-2">
+            <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
             <div>
               <h5 className="text-lg font-bold">Total Investments</h5>
-              <span className="text-[var(--money-green)]">₦ {investments}</span>
+              <span className="text-[var(--money-green)]">
+                ₦ {investments}
+              </span>
             </div>
             <div>
               <h5 className="text-lg font-bold">Total Withdrawn</h5>
-              <span className="text-[var(--money-green)]">₦ {withdrawn}</span>
+              <span className="text-[var(--money-green)]">
+                ₦ {withdrawn}
+              </span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 bg-[var(--plain-color)] p-4 rounded-md w-full">
+          <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
             <div>
-              <h5 className="text-lg font-bold">Remaining Investment</h5>
+              <h5 className="text-lg font-bold">Remaining Investments</h5>
               <span className="text-[var(--money-green)]">₦ {remainer}</span>
             </div>
             <div>
-              <h5 className="text-lg font-bold">Total Earning</h5>
+              <h5 className="text-lg font-bold">Total Earnings</h5>
               <span className="text-[var(--money-green)]">₦ {earning}</span>
             </div>
           </div>
+          </div>
+          {/* Data section */}
           <div className="flex flex w-full space-x-2 h-full">
             <div className="flex flex-col w-1/2 space-y-2 h-full">
               <div className="bg-[var(--plain-color)] h-1/2 p-4 rounded-md w-full font-bold">

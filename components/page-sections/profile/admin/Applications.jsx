@@ -40,7 +40,7 @@ const Applications = () => {
 
   return (
     <div className="w-full">
-      <table className="min-w-full bg-white border border-gray-200">
+      <table className="w-full bg-white border border-gray-200">
         <thead>
           <tr>
             <th className="border-b border-gray-200 px-4 py-2">ID</th>

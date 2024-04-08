@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
 import UserStatus from "@components/common/enums/UserStatus";
@@ -43,9 +44,8 @@ const Form = ({ formConfig, isSignup }) => {
         router.push(`${UserStatus[data.status].apiLink}`);
       } else {
         const errorText = await response.text();
-        console.log(errorText)
         setErrorMessage(errorText);
-    }
+      }
     } catch (error) {
       setErrorMessage("Details could not be fetched. Try again!");
     }
@@ -81,10 +81,15 @@ const Form = ({ formConfig, isSignup }) => {
         </div>
         <button
           type="submit"
-          className="bg-[var(--primary-color)] text-white w-full px-4 py-2 rounded-md"
+          className="bg-[var(--primary-color)] text-white w-full px-4 py-2 mb-2 rounded-md"
         >
           Submit
         </button>
+        {!isSignup && (
+          <Link href={"/reset"} className="text-[var(--primary-color)]">
+            Forgot your password?
+          </Link>
+        )}
       </form>
     </div>
   );
