@@ -13,9 +13,14 @@ export async function GET(request) {
   let res;
   let base_url = process.env.BASE_URL;
   try {
+    const queryString = request.url.split("?")[1];
+    const searchParams = new URLSearchParams(queryString);
+    const limit = searchParams.get("limit");
+    const offset = searchParams.get("offset");
+    
     const cookieData = await getCookieData(request);
 
-    res = await fetch(`${base_url}/api/users/all`, {
+    res = await fetch(`${base_url}/api/users?offset=${offset}&limit=${limit}`, {
       method: "GET",
       credentials: "include",
       headers: {

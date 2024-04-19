@@ -15,8 +15,7 @@ const items = [
     name: "Applications",
     link: "/profile/admin/applications",
     image: "/profiles/application.svg",
-  },
-  { name: "Bank", link: "/profile/admin/bank", image: "/profiles/bank.svg" },
+  }
 ];
 
 function RootLayout({ children }) {
@@ -34,7 +33,7 @@ function RootLayout({ children }) {
   return (
     <div className="w-full">
       {isMobileView ? (
-        <div className="flex flex-col w-full p-2 md:p-0">
+        <div className="flex flex-col w-full p-2 md:p-0 space-y-4">
           <Panel isMobileView={isMobileView} />
           <Navbar items={items} isMobileView={isMobileView} />
           {children}

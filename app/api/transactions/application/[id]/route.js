@@ -73,6 +73,8 @@ export async function GET(request, params) {
       accountNumber,
       narration,
       dueDate,
+      user,
+      deposit
     } = data;
 
     const responseData = JSON.stringify({
@@ -84,6 +86,8 @@ export async function GET(request, params) {
       bankName,
       accountName,
       accountNumber,
+      user,
+      deposit
     });
 
     return new Response(responseData, {

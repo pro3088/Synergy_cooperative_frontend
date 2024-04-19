@@ -4,9 +4,9 @@ import Link from "next/link";
 
 const Panel = ({ isMobileView }) => {
   return (
-    <div className="flex w-full ">
+    <div className="flex justify-between">
       {isMobileView && (
-        <Link href={"/"} className="font-bold flex items-center ml-auto ml-0 text-center">
+        <Link href={"/"} className="font-bold flex items-center">
           {" "}
           Synergy Cooperative LTD{" "}
         </Link>

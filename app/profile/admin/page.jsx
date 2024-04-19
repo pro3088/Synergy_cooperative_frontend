@@ -88,7 +88,7 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full pt-4">
+    <div className="flex flex-col w-full pt-2">
       <div className="flex flex-col w-full h-full space-y-4 left-0">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Dashboard</h3>
@@ -97,30 +97,32 @@ const page = () => {
         <div className="flex flex-col lg:flex-row w-full justify-around space-y-2 md:space-y-0 lg:space-x-2">
           {/* Analytics section */}
           <div className="w-full flex flex-row space-x-2">
-            <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
-            <div>
-              <h5 className="text-lg font-bold">Company Investments</h5>
-              <span className="text-[var(--money-green)]">
-                ₦ {companyInvestments}
-              </span>
+            <div className="flex flex-col bg-[var(--plain-color)] p-4 rounded-md w-full justify-around gap-2">
+              <div className="flex flex-col gap-1">
+                <h5 className="text-lg font-bold">Company Investments</h5>
+                <span className="text-[var(--money-green)]">
+                  ₦ {companyInvestments}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <h5 className="text-lg font-bold">Company Total Withdrawn</h5>
+                <span className="text-[var(--money-green)]">
+                  ₦ {companyWithdrawn}
+                </span>
+              </div>
             </div>
-            <div>
-              <h5 className="text-lg font-bold">Company Total Withdrawn</h5>
-              <span className="text-[var(--money-green)]">
-                ₦ {companyWithdrawn}
-              </span>
+            <div className="flex flex-col bg-[var(--plain-color)] p-4 rounded-md w-full justify-around gap-2">
+              <div className="flex flex-col gap-1">
+                <h5 className="text-lg font-bold">Total Investments</h5>
+                <span className="text-[var(--money-green)]">
+                  ₦ {investments}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <h5 className="text-lg font-bold">Total Withdrawn</h5>
+                <span className="text-[var(--money-green)]">₦ {withdrawn}</span>
+              </div>
             </div>
-          </div>
-          <div className="bg-[var(--plain-color)] p-4 rounded-md w-full">
-            <div>
-              <h5 className="text-lg font-bold">Total Investments</h5>
-              <span className="text-[var(--money-green)]">₦ {investments}</span>
-            </div>
-            <div>
-              <h5 className="text-lg font-bold">Total Withdrawn</h5>
-              <span className="text-[var(--money-green)]">₦ {withdrawn}</span>
-            </div>
-          </div>
           </div>
           {/* Data section */}
           <div className="flex w-full space-x-2 h-full">
@@ -136,11 +138,11 @@ const page = () => {
             </div>
             <div className="flex flex-col w-1/2 space-y-2 h-full">
               <div className="bg-[var(--plain-color)] p-4 rounded-md w-full h-1/2 font-bold">
-                <h5>Loanee's</h5>
+                <h5>Member's</h5>
                 <span>{loanees}</span>
               </div>
               <div className="bg-[var(--plain-color)] p-4 rounded-md w-full h-1/2 font-bold">
-                <h5>Investor's</h5>
+                <h5>Financial Member's</h5>
                 <span>{investors}</span>
               </div>
             </div>

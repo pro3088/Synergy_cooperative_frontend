@@ -1,21 +1,23 @@
 export const dynamic = "force-dynamic";
 
-export async function PUT(params) {
+export async function GET(request, params) {
   let res;
-  let base_url = process.env.BASE_URL
+  let base_url = process.env.BASE_URL;
+  const email = params.params.email;
+  const queryString = request.url.split("?")[1];
+  const searchParams = new URLSearchParams(queryString);
+  const origin = searchParams.get("origin");
   try {
-    const email = params.params.email;
-
-    res = await fetch(`${base_url}/api/users/mail/reset/${email}`, {
-      method: "PUT",
+    res = await fetch(`${base_url}/api/users/reset/${email}?origin=${origin}`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
     });
 
     if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(errorText);
+      console.log(res);
+      throw new Error(res.message);
     }
 
     return new Response({
@@ -23,6 +25,7 @@ export async function PUT(params) {
       headers: res.headers,
     });
   } catch (error) {
-    return new Response(error, { status: res.status });
+    console.error("Error processing data:", error);
+    return new Response(error, { status: 500, headers: res.headers });
   }
 }

@@ -10,8 +10,14 @@ const ResetPasswordForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const origin = window.location.origin;
     try {
-      const response = await fetch(`/api/reset/${email}`);
+      const response = await fetch(`/api/profile/reset/${email}?origin=${origin}`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (response.ok) {
         setSuccess(true);
       } else {

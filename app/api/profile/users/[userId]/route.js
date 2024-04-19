@@ -36,8 +36,8 @@ export async function GET(request, params) {
     }
 
     const data = await res.json();
-    const { id, firstName, lastName, emailAddress, status } = data;
-    const selectedData = { id, firstName, lastName, emailAddress, status };
+    const { id, firstName, lastName, emailAddress, status, dateJoined } = data;
+    const selectedData = { id, firstName, lastName, emailAddress, status, dateJoined };
     const responseData = JSON.stringify(selectedData);
 
     return new Response(responseData, {

@@ -3,8 +3,11 @@ import { useState } from "react";
 
 const Overlay = ({ formConfig }) => {
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const formData = {};
     formConfig.forEach((field, index) => {
@@ -32,6 +35,8 @@ const Overlay = ({ formConfig }) => {
       }
     } catch (error) {
       console.error("Error during process:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,8 +74,9 @@ const Overlay = ({ formConfig }) => {
           <button
             type="submit"
             className="bg-[var(--primary-color)] text-white w-full px-4 py-2 rounded-md"
+            disabled={loading}
           >
-            Submit
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </form>
       )}

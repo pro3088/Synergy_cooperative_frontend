@@ -41,7 +41,7 @@ const Button = ({ text, bg, textColor, overlayContent }) => {
     <div>
       <button
         ref={buttonRef}
-        className={`button-big rounded-md p-2 text-center align-center  ${backgroundColorClass} ${textColorClass}`}
+        className={`button-big rounded-md p-1 text-center align-center  ${backgroundColorClass} ${textColorClass}`}
         onClick={handleClick}
       >
         {text}

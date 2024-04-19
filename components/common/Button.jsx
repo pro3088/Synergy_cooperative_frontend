@@ -13,7 +13,7 @@ const Button = ({ text, bg, textColor, link, border }) => {
   }
 
   textColorClass = textColor ? "text-[var(--dark-color)]" : "text-white";
-  const buttonStyle = `cursor-pointer text-center px-4 py-0.5 border-solid rounded-md border-2 ${
+  const buttonStyle = `h-fit cursor-pointer text-center px-4 py-0.5 border-solid rounded-md border-2 ${
     textColor === "blue"
       ? "text-[var(--primary-color)] border-[var(--primary-color)]"
       : "text-white border-white"
@@ -29,7 +29,7 @@ const Button = ({ text, bg, textColor, link, border }) => {
 
   return (
     <Link
-      className={`button-big rounded-md p-2 text-center align-center w-36 ${backgroundColorClass} ${textColorClass}`}
+      className={`h-fit button-big rounded-md p-2 text-center align-center w-36 ${backgroundColorClass} ${textColorClass}`}
       href={link}
     >
       {text}

@@ -1,38 +1,55 @@
 "use client";
 import { useState, useEffect } from "react";
 
-function fetchData(setData, apiEndpoint) {
-  return async () => {
+const UserTable = () => {
+  const limit = 5;
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [offset, setOffset] = useState(0);
+  const [userData, setUserData] = useState([]);
+
+  const fetchUsers = async () => {
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `/api/profile/users?offset=${offset}&limit=${limit}`
+      );
       if (response.ok) {
         const data = await response.json();
-        setData(data);
+        setUserData(data.content);
+        setTotalPages(data.totalPages);
       } else {
-        console.error("Failed to fetch data");
+        console.error("Failed to fetch applications.");
       }
     } catch (error) {
       console.error("Error during API call:", error);
     }
   };
-}
-
-const UserTable = () => {
-  const [userData, setUserData] = useState([]);
-  const fetchUsers = fetchData(setUserData, "/api/profile/users");
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [page]);
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+      setOffset(offset + limit);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      if (page == 1) {
+        setOffset(0);
+      } else {
+        setOffset(offset - limit);
+      }
+    }
+  };
+
 
   return (
-    <div className="w-full">
+    <div className="overflow-x-auto w-full max-w-screen-lg mx-auto">
       <table className="w-full bg-white border border-gray-200">
         <thead>
           <tr>
@@ -60,7 +77,6 @@ const UserTable = () => {
               </td>
               <td className="border-b border-gray-200 px-4 py-2">
                 <button className="text-blue-500 hover:text-blue-700 focus:outline-none">
-                  {/* Add your three dots icon or any other UI element for more information */}
                   ...
                 </button>
               </td>
@@ -68,6 +84,25 @@ const UserTable = () => {
           ))}
         </tbody>
       </table>
+      <div className="mt-4 flex justify-around items-center">
+        <button
+          onClick={handlePrevPage}
+          disabled={page === 1}
+          className="text-[var(--primary-color)]"
+        >
+          Previous Page
+        </button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={page === totalPages}
+          className="text-[var(--primary-color)]"
+        >
+          Next Page
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,10 +1,18 @@
+'use client'
 import Applications from "@components/page-sections/profile/admin/Applications";
 import Button from "@components/common/OverlayButton";
 import ApplicationOverlay from "@components/page-sections/profile/loanee/ApplicationOverlay";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
 const page = () => {
   return (
-    <div className="w-full pr-12 pt-12 left-0">
+    <div className="w-full p-2 left-0">
       <div className="flex flex-col w-full h-full space-y-4">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Applications</h3>
@@ -21,11 +29,13 @@ const page = () => {
           <Button
             text="Withdraw"
             overlayContent={
-              <ApplicationOverlay type="WITHDRAW" period={false} />
+              <ApplicationOverlay type="WITHDRAW" period={false} withdrawal={true} />
             }
           />
         </div>
-        <Applications />
+        <Elements stripe={stripePromise}>
+          <Applications />
+        </Elements>
       </div>
     </div>
   );

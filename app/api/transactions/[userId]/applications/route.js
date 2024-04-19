@@ -12,6 +12,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request, params) {
   let res;
   let base_url = process.env.BASE_URL;
+  let ff;
   try {
     const queryString = request.url.split("?")[1];
     const searchParams = new URLSearchParams(queryString);
@@ -23,7 +24,7 @@ export async function GET(request, params) {
     const cookieData = await getCookieData(request);
 
     res = await fetch(
-      `${base_url}/api/transactions/${userId}/applications?limit=${limit}&offset=${offset}&pageSize=${pageSize}`,
+      `${base_url}/api/transactions/${userId}/applications?limit=${limit}&offset=${offset}`,
       {
         method: "GET",
         headers: {

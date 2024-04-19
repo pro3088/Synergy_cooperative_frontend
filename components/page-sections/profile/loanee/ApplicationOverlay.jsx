@@ -4,44 +4,69 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
 
-function fetchBanksData(setData) {
-  return async () => {
-    try {
-      const response = await fetch("/api/banks", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setData(data);
-      } else {
-        console.error("Failed to fetch data");
-      }
-    } catch (error) {
-      console.error("Error during API call:", error);
-    }
-  };
-}
+const formConfig = [
+  { name: "name", label: "Bank Name" },
+  { name: "accountName", label: "Account Name" },
+  { name: "accountNumber", label: "Account Number" },
+];
 
-const ApplicationOverlay = ({ type, period }) => {
+const ApplicationOverlay = ({ type, period, withdrawal = false, loan = false }) => {
   let { user } = useAuth();
   const [amount, setAmount] = useState("");
   const [date, setPeriod] = useState(new Date());
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [banks, setBanks] = useState([]);
-  const fetchBanks = fetchBanksData(setBanks);
+  const [bank, setBank] = useState(null);
+  const [loading, setLoading] = useState(false);
   user = user.id;
 
-  useEffect(() => {
-    fetchBanks();
-  }, []);
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    const inputNumeric = inputValue.replace(/[^\d.]/g, "");
+    const [integerPart] = inputNumeric.split(".");
+    const formattedIntegerPart = Number(integerPart).toLocaleString();
+    setAmount(formattedIntegerPart);
+  };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, redirectToPayment) => {
     event.preventDefault();
+    const formData = {};
+    setLoading(true);
+    {
+      withdrawal &&
+        formConfig.forEach((field, index) => {
+          formData[field.name] = document.getElementById(
+            `${field.name}-${index}`
+          ).value;
+        });
+      try {
+        const apiEndpoint = "/api/banks";
+
+        const response = await fetch(apiEndpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...formData }),
+        });
+        if (response.ok) {
+          const responseData = await response.json();
+          setBank(responseData.id);
+        } else {
+          console.error("Failed to submit application.");
+        }
+      } catch (error) {
+        console.error("Error during process:", error);
+      }
+    }
+
+    const transactionData = JSON.stringify({
+      amount,
+      date,
+      user,
+      type,
+      bank: bank,
+    });
+
     try {
       const response = await fetch("/api/transactions", {
         method: "POST",
@@ -49,17 +74,18 @@ const ApplicationOverlay = ({ type, period }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          amount,
-          date,
-          user,
-          type,
-          bank: selectedOption,
-        }),
+        body: transactionData,
       });
 
       if (response.ok) {
+        const responseData = await response.json();
+
+        if (redirectToPayment) {
+          window.location.href = `/profile/utils/payment?amount=${amount}&type=${type}&id=${responseData.id}`;
+        }
+        
         setSubmissionSuccess(true);
+
       } else {
         console.error("Failed to submit application.");
       }
@@ -68,23 +94,19 @@ const ApplicationOverlay = ({ type, period }) => {
     }
     setAmount("");
     setPeriod(new Date());
+    setLoading(false);
   };
 
-  const handleInputChange = (e) => {
-    const inputElement = e.target;
-    const inputValue = inputElement.value;
-    const inputNumeric = inputValue.replace(/[^\d.]/g, "");
-    const [integerPart] = inputNumeric.split(".");
-    const formattedIntegerPart = Number(integerPart).toLocaleString();
-    inputElement.value = formattedIntegerPart;
-
-    setAmount(formattedIntegerPart);
+  const handlePayment = async (event) => {
+    await handleSubmit(event, true);
   };
 
   return (
     <div className="flex flex-col gap-2 items-center">
       <h2 className="text-xl font-bold">{type} APPLICATION</h2>
-      {submissionSuccess ? (
+      {loading ? (
+        <div className="text-gray-600 font-bold">Loading...</div>
+      ) : submissionSuccess ? (
         <div className="text-green-600 font-bold">
           Application submitted successfully!
         </div>
@@ -98,35 +120,49 @@ const ApplicationOverlay = ({ type, period }) => {
               onChange={handleInputChange}
               className="mt-1 p-2 rounded-md w-full bg-white"
             />
-            {period ? (
+            {period && (
               <div className="flex flex-col gap-1">
                 <span className="font-bold">{type} PERIOD</span>
                 <Calendar onChange={setPeriod} value={date} />
               </div>
-            ) : null}
-            <div className="flex flex-col gap-1">
-              <span className="font-bold">SELECT BANK</span>
-              <select
-                value={selectedOption}
-                onChange={(e) => setSelectedOption(e.target.value)}
-              >
-                <option value="">Select Option</option>
-                {banks
-                  .filter((option) => option.company === true)
-                  .map((option, index) => (
-                    <option key={index} value={option.id}>
-                      {option.name}:{option.accountNumber}
-                    </option>
-                  ))}
-              </select>
-            </div>
+            )}
+            {withdrawal && (
+              <div className="flex flex-col gap-1">
+                {formConfig.map((field, index) => (
+                  <div key={index} className="mb-4">
+                    <label
+                      htmlFor={`${field.name}-${index}`}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      {field.label}
+                    </label>
+                    <input
+                      type={field.type || "text"}
+                      id={`${field.name}-${index}`}
+                      placeholder={`${field.label.toLowerCase()}`}
+                      className="mt-1 p-2 border rounded-md w-full bg-white"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="flex gap-2">
-              <button
-                type="submit"
-                className="mt-4 px-4 py-2 bg-[var(--money-green)] text-white rounded-md"
-              >
-                Submit
-              </button>
+              {withdrawal || loan ? (
+                <button
+                  type="submit"
+                  className="mt-4 px-4 py-2 bg-[var(--money-green)] text-white rounded-md"
+                >
+                  Submit
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handlePayment}
+                  className="mt-4 px-4 py-2 bg-[var(--money-green)] text-white rounded-md"
+                >
+                  Proceed to Payment
+                </button>
+              )}
             </div>
           </div>
         </form>
