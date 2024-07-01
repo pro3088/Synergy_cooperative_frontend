@@ -72,17 +72,23 @@ const page = () => {
     fetchAllData();
   }, [userId, user]);
 
-  const InfoCard = ({ title, value, className, addNaira = false }) => (
-    <div className={`flex flex-col bg-[var(--plain-color)] p-4 rounded-md w-full justify-around gap-2 ${className}`}>
-      <h5 className="text-lg font-bold">{title}</h5>
-      <span className={addNaira ? "text-[var(--money-green)]" : "text-black"}>
-        {addNaira ? `₦ ${value}` : value}
-      </span>
-    </div>
-  );
+  const InfoCard = ({ title, value, className, addNaira = false }) => {
+    const formattedValue = addNaira
+      ? new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(value)
+      : value;
+  
+    return (
+      <div className={`flex flex-col bg-[var(--plain-color)] p-4 rounded-md w-full justify-around gap-2 ${className}`}>
+        <h5 className="text-lg font-bold">{title}</h5>
+        <span className={addNaira ? "text-[var(--money-green)]" : "text-black"}>
+          {formattedValue}
+        </span>
+      </div>
+    );
+  };
 
   return (
-    <div className="flex flex-col w-full pt-2">
+    <div className="flex flex-col w-full py-2">
       <div className="flex flex-col w-full h-full space-y-4 left-0">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-2xl">Dashboard</h3>

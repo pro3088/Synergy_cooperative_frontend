@@ -30,7 +30,7 @@ function RootLayout({ children }) {
           {children}
         </div>
       ) : (
-        <div className="flex flex-row p-0 space-x-12 w-full">
+        <div className="flex flex-row p-0 space-x-12  w-full h-full min-h-screen">
           <Navbar items={items} isMobileView={isMobileView} />
           <div className="flex w-full md:w-3/4 flex-col space-y-2 pt-4 md:pr-12">
             <Panel />

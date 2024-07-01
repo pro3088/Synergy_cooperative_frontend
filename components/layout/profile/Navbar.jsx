@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const Navbar = ({ items, isMobileView=false }) => {
@@ -20,7 +21,7 @@ const Navbar = ({ items, isMobileView=false }) => {
   }, []);
 
   return (
-    <section className=" w-full md:w-1/4">
+    <section className="w-72">
       {isMobileView ? (
         <div className="overflow-x-auto whitespace-nowrap w-full">
           <div className="flex flex-row space-x-4 items-center justify-center">
