@@ -26,7 +26,7 @@ const Navbar = ({ items, isMobileView=false }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-[100vh] bg-[var(--plain-color)] flex flex-col items-center">
+        <div className="w-full h-full bg-[var(--plain-color)] flex flex-col items-center">
           <Link href={"/"} className="font-bold w-full py-8 text-center">
             {" "}
             Synergy Cooperative LTD{" "}
@@ -44,11 +44,6 @@ const Navbar = ({ items, isMobileView=false }) => {
                   <img
                     src={item.image}
                     alt="image"
-                    className={`w-8 h-8 ${
-                      pathname === item.link
-                        ? "fill-[var(--primary-color)]"
-                        : "fill-current text-blue-500"
-                    }`}
                   />
                   <span className="text-base w-32">{item.name}</span>
                 </div>
