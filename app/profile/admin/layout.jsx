@@ -34,13 +34,13 @@ function RootLayout({ children }) {
     <div className="w-full">
       {isMobileView ? (
         <div className="flex flex-col w-full p-2 md:p-0 space-y-4">
-          <Panel isMobileView={isMobileView} />
-          <Navbar items={items} isMobileView={isMobileView} />
+          <Panel isMobileView={true} />
+          <Navbar items={items} isMobileView={true} />
           {children}
         </div>
       ) : (
         <div className="flex flex-row p-0 space-x-12 w-full">
-          <Navbar items={items} isMobileView={isMobileView} />
+          <Navbar items={items} />
 
           <div className="flex w-full md:w-3/4 flex-col space-y-2 pt-4 md:pr-12">
             <Panel />

@@ -36,6 +36,7 @@ const page = () => {
   const [loanees, setLoanees] = useState(0);
   const [investors, setInvestors] = useState(0);
   const [referrals, setReferrals] = useState(0);
+  const [earning, setEarning] = useState(0);
   const date = new Date().toISOString().split("T")[0];
 
   const options = [
@@ -47,6 +48,10 @@ const page = () => {
   const fetchCompanyTransactions = fetchData(
     setCompanyInvestment,
     `/api/transactions/total/${"INVESTMENT"}`
+  );
+  const fetchTotalEarning = fetchData(
+    setEarning,
+    `/api/transactions/total/earning/${userId}`
   );
   const fetchCompanyWithdrawn = fetchData(
     setCompanyWithdrawn,
@@ -81,6 +86,7 @@ const page = () => {
     fetchCompanyTransactions();
     fetchCompanyWithdrawn();
     fetchTransactions();
+    fetchTotalEarning();
     fetchWithdrawn();
     fetchReferrals();
     fetchInvestors();
@@ -148,8 +154,12 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="flex w-full">
-          <div className="bg-[var(--plain-color)] w-full md:w-1/2 flex flex-col gap-4 p-4 py-12 rounded-md">
+        <div className="flex flex-row w-full gap-2">
+          <div className="bg-[var(--plain-color)] w-full h-full md:w-1/4 flex flex-col gap-4 p-4 py-12 rounded-md">
+            <h5 className="font-bold text-lg">Investment Gains</h5>
+            <span className="text-[var(--money-green)]">₦ {earning}</span>
+          </div>
+          <div className="bg-[var(--plain-color)] w-full md:w-3/4 flex flex-col gap-4 p-4 py-12 rounded-md">
             <h5 className="font-bold text-lg">Generate Referral</h5>
             <Button
               text="Generate Referral"

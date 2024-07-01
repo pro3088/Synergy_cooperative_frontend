@@ -3,7 +3,7 @@ import Button from "@components/common/Button";
 import Form from "@components/common/Form";
 
 const formConfig = [
-  { name: "username", label: "Email" },
+  { name: "username", label: "Email", type: "email" },
   { name: "password", label: "Password", type: "password" },
 ];
 

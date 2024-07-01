@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Navbar = ({ items, isMobileView }) => {
+const Navbar = ({ items, isMobileView=false }) => {
   const pathname = usePathname();
 
   return (

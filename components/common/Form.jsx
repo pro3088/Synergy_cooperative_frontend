@@ -41,6 +41,7 @@ const Form = ({ formConfig, isSignup }) => {
         const data = await response.json();
         login(data);
         localStorage.setItem("UTIL", data.encryptedId);
+        localStorage.setItem("STATUS", data.status);
         router.push(`${UserStatus[data.status].apiLink}`);
       } else {
         const errorText = await response.text();

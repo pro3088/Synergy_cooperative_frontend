@@ -6,7 +6,7 @@ import Invoice from "@components/page-sections/profile/Invoice";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
 import { useStripe } from "@stripe/react-stripe-js";
 
-const Applications = ({ isUser = false}) => {
+const Applications = ({ isUser = false }) => {
   const stripe = useStripe();
   const limit = 5;
   const [page, setPage] = useState(1);
@@ -140,8 +140,7 @@ const Applications = ({ isUser = false}) => {
                 }`}
               >
                 {application.status !== "COMPLETED" &&
-                (application.type === "WITHDRAW" ||
-                  application.type === "LOAN") &&
+                application.status !== "REJECTED" &&
                 !isUser ? (
                   <Button
                     text={application.status}

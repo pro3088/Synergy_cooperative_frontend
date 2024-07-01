@@ -5,7 +5,7 @@ import Form from "@components/common/Form";
 const formConfig = [
     { name: 'firstName', label: 'First Name' },
     { name: 'lastName', label: 'Last Name' },
-    { name: 'emailAddress', label: 'Email' },
+    { name: 'emailAddress', label: 'Email', type: 'email' },
     { name: 'password', label: 'Password', type: 'password' },
     { name: 'referralCode', label: 'Code' },
   ];
