@@ -4,6 +4,20 @@ import { usePathname } from "next/navigation";
 
 const Navbar = ({ items, isMobileView=false }) => {
   const pathname = usePathname();
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    const status = localStorage.getItem("STATUS");
+    if (status == "ADMIN"){
+      setUrl("/profile/admin");
+    }
+    else if (status == "FINANCIAL_MEMBER"){
+      setUrl("/profile/financial_member");
+    }
+    else{
+      setUrl("/profile/member");
+    }
+  }, []);
 
   return (
     <section className=" w-full md:w-1/4">
@@ -27,7 +41,7 @@ const Navbar = ({ items, isMobileView=false }) => {
         </div>
       ) : (
         <div className="w-full h-full bg-[var(--plain-color)] flex flex-col items-center">
-          <Link href={"/"} className="font-bold w-full py-8 text-center">
+          <Link href={url} className="font-bold w-full py-8 text-center">
             {" "}
             Synergy Cooperative LTD{" "}
           </Link>
