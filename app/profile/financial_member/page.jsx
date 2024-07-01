@@ -4,72 +4,82 @@ import Button from "@components/common/OverlayButton";
 import Referral from "@components/page-sections/profile/admin/ReferralGenerator";
 import { useAuth } from "@/components/common/authentication/AuthProvider";
 
-function fetchData(setData, apiEndpoint) {
-  return async () => {
-    try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setData(data.value);
-      } else {
-        console.error("Failed to fetch data for " + name);
-      }
-    } catch (error) {
-      console.error("Error during API call:", error);
+const fetchData = async (apiEndpoint, setter) => {
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setter(data.value);
+    } else {
+      console.error("Failed to fetch data from " + apiEndpoint);
     }
-  };
-}
+  } catch (error) {
+    console.error("Error during API call:", error);
+  }
+};
 
 const page = () => {
   const { user } = useAuth();
-  const userId = user != null ? user.id : "id";
+  const userId = user?.id || "id";
   const type = "INVESTMENT";
-  const [investments, setInvestment] = useState(0);
-  const [withdrawn, setWithdrawn] = useState(0);
-  const [earning, setEarning] = useState(0);
-  const [transactions, setTransactions] = useState(0);
-  const [profile, setProfile] = useState("");
-  const [dateJoined, setDateJoined] = useState("");
+
+  const [stats, setStats] = useState({
+    investments: 0,
+    withdrawn: 0,
+    earning: 0,
+    transactions: 0,
+    profile: "",
+    dateJoined: "",
+  });
+
   const date = new Date().toISOString().split("T")[0];
-  const remainer = investments - withdrawn;
+  const remainder = stats.investments - stats.withdrawn;
 
   const options = [{ name: "MEMBER" }, { name: "FINANCIAL_MEMBER" }];
 
-  const fetchTransactions = fetchData(
-    setInvestment,
-    `/api/transactions/total/${"INVESTMENT"}/${userId}`
-  );
-  const fetchWithdrawn = fetchData(
-    setWithdrawn,
-    `/api/transactions/total/${"WITHDRAW"}/${userId}`
-  );
-  const fetchInvestmentCount = fetchData(
-    setTransactions,
-    `/api/transactions/total/${type}/${userId}/count`
-  );
-  const fetchTotalEarning = fetchData(
-    setEarning,
-    `/api/transactions/total/earning/${userId}`
-  );
-
   useEffect(() => {
-    fetchTransactions();
-    fetchWithdrawn();
-    fetchInvestmentCount();
-    fetchTotalEarning();
-    if (user != null) {
-      setProfile(user.firstName);
-      setDateJoined(user.dateJoined);
-    }
-    console.log("user: ", user);
-    console.log("date: ",dateJoined);
-  }, []);
+    const fetchAllData = async () => {
+      await Promise.all([
+        fetchData(`/api/transactions/total/INVESTMENT/${userId}`, (value) =>
+          setStats((prev) => ({ ...prev, investments: value }))
+        ),
+        fetchData(`/api/transactions/total/WITHDRAW/${userId}`, (value) =>
+          setStats((prev) => ({ ...prev, withdrawn: value }))
+        ),
+        fetchData(`/api/transactions/total/${type}/${userId}/count`, (value) =>
+          setStats((prev) => ({ ...prev, transactions: value }))
+        ),
+        fetchData(`/api/transactions/total/earning/${userId}`, (value) =>
+          setStats((prev) => ({ ...prev, earning: value }))
+        ),
+      ]);
+
+      if (user) {
+        setStats((prev) => ({
+          ...prev,
+          profile: user.firstName,
+          dateJoined: user.dateJoined,
+        }));
+      }
+    };
+
+    fetchAllData();
+  }, [userId, user]);
+
+  const InfoCard = ({ title, value, className, addNaira = false }) => (
+    <div className={`flex flex-col bg-[var(--plain-color)] p-4 rounded-md w-full justify-around gap-2 ${className}`}>
+      <h5 className="text-lg font-bold">{title}</h5>
+      <span className={addNaira ? "text-[var(--money-green)]" : "text-black"}>
+        {addNaira ? `₦ ${value}` : value}
+      </span>
+    </div>
+  );
 
   return (
     <div className="flex flex-col w-full pt-2">
@@ -79,52 +89,34 @@ const page = () => {
           <h5>Good to see you here</h5>
         </div>
         <div className="flex flex-col lg:flex-row w-full justify-around space-y-2 md:space-y-0 lg:space-x-2">
-          {/* Analytics section */}
           <div className="w-full flex flex-row space-x-2">
-            <div className="flex flex-col bg-[var(--plain-color)] p-4 rounded-md w-full justify-around gap-2">
-              <div className="flex flex-col gap-1">
-                <h5 className="text-lg font-bold">Total Investments</h5>
-                <span className="text-[var(--money-green)]">
-                  ₦ {investments}
-                </span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <h5 className="text-lg font-bold">Total Withdrawn</h5>
-                <span className="text-[var(--money-green)]">₦ {withdrawn}</span>
-              </div>
+            <InfoCard title="Total Investments" value={stats.investments} addNaira={true} />
+            <InfoCard title="Total Withdrawn" value={stats.withdrawn} addNaira={true} />
+          </div>
+          <div className="w-full flex flex-row space-x-2">
+            <InfoCard title="Remaining Investments" value={remainder} addNaira={true} />
+            <InfoCard title="Total Earnings" value={stats.earning} addNaira={true} />
+          </div>
+        </div>
+        <div className="flex w-full space-x-2 h-full">
+          <div className="flex flex-col w-1/2 space-y-2 h-full">
+            <div className="bg-[var(--plain-color)] h-1/2 p-4 rounded-md w-full font-bold">
+              <h5>Transactions</h5>
+              <span>{stats.transactions}</span>
             </div>
-            <div className="flex flex-col bg-[var(--plain-color)] p-4 rounded-md w-full justify-around gap-2">
-              <div className="flex flex-col gap-1">
-                <h5 className="text-lg font-bold">Remaining Investments</h5>
-                <span className="text-[var(--money-green)]">₦ {remainer}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <h5 className="text-lg font-bold">Total Earnings</h5>
-                <span className="text-[var(--money-green)]">₦ {earning}</span>
-              </div>
+            <div className="bg-[var(--plain-color)] h-1/2 p-4 rounded-md w-full font-bold">
+              <h5>JOINED</h5>
+              <span>{stats.dateJoined}</span>
             </div>
           </div>
-          {/* Data section */}
-          <div className="flex flex w-full space-x-2 h-full">
-            <div className="flex flex-col w-1/2 space-y-2 h-full">
-              <div className="bg-[var(--plain-color)] h-1/2 p-4 rounded-md w-full font-bold">
-                <h5>Transactions</h5>
-                <span>{transactions}</span>
-              </div>
-              <div className="bg-[var(--plain-color)] h-1/2 p-4 rounded-md w-full font-bold">
-                <h5>JOINED</h5>
-                <span>{dateJoined}</span>
-              </div>
+          <div className="flex flex-col w-1/2 space-y-2 h-full">
+            <div className="bg-[var(--plain-color)] p-4 rounded-md w-full h-1/2 font-bold">
+              <h5>Profile</h5>
+              <span>{stats.profile}</span>
             </div>
-            <div className="flex flex-col w-1/2 space-y-2 h-full">
-              <div className="bg-[var(--plain-color)] p-4 rounded-md w-full h-1/2 font-bold">
-                <h5>Profile</h5>
-                <span>{profile}</span>
-              </div>
-              <div className="bg-[var(--plain-color)] p-4 rounded-md w-full h-1/2 font-bold">
-                <h5>DATE</h5>
-                <span>{date}</span>
-              </div>
+            <div className="bg-[var(--plain-color)] p-4 rounded-md w-full h-1/2 font-bold">
+              <h5>DATE</h5>
+              <span>{date}</span>
             </div>
           </div>
         </div>

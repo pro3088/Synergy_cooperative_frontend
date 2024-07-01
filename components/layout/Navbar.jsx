@@ -10,7 +10,9 @@ const Navbar = ({
 }) => {
   const navbarClasses = `h-[5vh] flex items-center w-full ${
     showBackground ? "bg-[var(--primary-color)]" : ""
-  } ${plainBackground ? "bg-[var(--plain-color)]" : ""} py-8 px-2 md:px-12 lg:px-28`;
+  } ${
+    plainBackground ? "bg-[var(--plain-color)]" : ""
+  } py-8 px-2 md:px-12 lg:px-28`;
 
   const linkStyle = `flex-no-grow flex-no-shrink relative ${
     linkColor === "black" ? "text-[var(--dark-color)]" : "text-white"
@@ -18,18 +20,16 @@ const Navbar = ({
 
   return (
     <div className={navbarClasses}>
-      <div className="container mx-auto max-w-screen-2xl ">
-        <div className="flex flex-no-shrink items-center justify-between">
-          <a href="/" className={linkStyle}>
-            Synergy Cooperative LTD
-          </a>
-          <Button
-            text={buttonText}
-            textColor={buttonTextColor}
-            link={buttonLink}
-            border={true}
-          />
-        </div>
+      <div className="flex flex-no-shrink w-full items-center justify-between">
+        <a href="/" className={linkStyle}>
+          Synergy Cooperative LTD
+        </a>
+        <Button
+          text={buttonText}
+          textColor={buttonTextColor}
+          link={buttonLink}
+          border={true}
+        />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const Page = () => {
         linkColor="black"
         buttonTextColor="blue"
       />
-      <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-screen-2xl py-4 px-4 md:px-12 lg:px-28">
+      <div className="flex flex-col md:flex-row justify-around items-center w-full py-4 px-4 md:px-12 lg:px-28">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <h4 className="text-2xl font-bold">Log in to your account</h4>
