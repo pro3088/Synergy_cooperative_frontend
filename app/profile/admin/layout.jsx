@@ -41,7 +41,7 @@ function RootLayout({ children }) {
       ) : (
         <div className="flex flex-row p-0 space-x-12 w-full h-full min-h-screen">
           <Navbar items={items} />
-          <div className="flex w-full md:w-3/4 flex-col space-y-2 pt-4 md:pr-12">
+          <div className="flex w-full flex-col space-y-2 pt-4 md:pr-12">
             <Panel />
             {children}
           </div>

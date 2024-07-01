@@ -99,7 +99,7 @@ const Applications = ({ isUser = false }) => {
   };
 
   return (
-    <div className="overflow-x-auto w-full max-w-screen-lg mx-auto">
+    <div className="overflow-x-auto w-full">
       <table className="w-full bg-white border border-gray-200">
         <thead>
           <tr>

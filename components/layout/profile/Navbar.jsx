@@ -21,9 +21,9 @@ const Navbar = ({ items, isMobileView=false }) => {
   }, []);
 
   return (
-    <section className="w-72">
+    <section>
       {isMobileView ? (
-        <div className="overflow-x-auto whitespace-nowrap w-full">
+        <div className="w-full overflow-x-auto whitespace-nowrap w-full">
           <div className="flex flex-row space-x-4 items-center justify-center">
             {items.map((item, index) => (
               <Link key={index} href={item.link} className="">
@@ -41,7 +41,7 @@ const Navbar = ({ items, isMobileView=false }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-full bg-[var(--plain-color)] flex flex-col items-center">
+        <div className="w-72 xl:w-96 h-full bg-[var(--plain-color)] flex flex-col items-center">
           <Link href={url} className="font-bold w-full py-8 text-center">
             {" "}
             Synergy Cooperative LTD{" "}

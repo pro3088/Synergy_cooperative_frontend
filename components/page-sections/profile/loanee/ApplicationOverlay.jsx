@@ -101,6 +101,10 @@ const ApplicationOverlay = ({ type, period, withdrawal = false, loan = false }) 
     await handleSubmit(event, true);
   };
 
+  const handleOfflinePayment = async (event) => {
+    await handleSubmit(event, false);
+  };
+
   return (
     <div className="flex flex-col gap-2 items-center">
       <h2 className="text-xl font-bold">{type} APPLICATION</h2>
@@ -155,13 +159,22 @@ const ApplicationOverlay = ({ type, period, withdrawal = false, loan = false }) 
                   Submit
                 </button>
               ) : (
-                <button
+                <div className="flex flex-col gap-1">
+                  <button
                   type="button"
                   onClick={handlePayment}
                   className="mt-4 px-4 py-2 bg-[var(--money-green)] text-white rounded-md"
                 >
-                  Proceed to Payment
+                  Pay with Card
                 </button>
+                <button
+                  type="button"
+                  onClick={handleOfflinePayment}
+                  className="mt-4 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md"
+                >
+                  Pay with Transfer
+                </button>
+                </div>
               )}
             </div>
           </div>
